@@ -20,15 +20,15 @@ body {
 }
 
 a {
-  color:white;
+  color: #ffffff;
 }
 
 a:hover {
-  color:silver;
+  color:#c0c0c0;
 }
 
 .jobTitle {
-  color: yellow;
+  color:#ffff4d;
   font-weight: bold;
 }
 
