@@ -19,6 +19,19 @@ body {
   background-color: #111;
 }
 
+a {
+  color:white;
+}
+
+a:hover {
+  color:silver;
+}
+
+.jobTitle {
+  color: yellow;
+  font-weight: bold;
+}
+
 .poppins-font {
   font-family: 'Poppins', sans-serif;
 }
