@@ -19,23 +19,6 @@ body {
   background-color: #111;
 }
 
-a:hover {
-  color: silver;
-  }
-  
-  
-
-.socialLink {
-
-  color: white;
-}
-
-.jobTitle {
-
-  color: yellow;
-  font-weight: bold;
-}
-
 .poppins-font {
   font-family: 'Poppins', sans-serif;
 }
