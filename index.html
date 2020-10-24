@@ -1,14 +1,10 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
 
-
 <head>
     <meta charset="utf-8">
     <title>Chad D. Mills - UX Personal Portfolio</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"/>
-    <meta http-equiv="Pragma" content="no-cache"/>
-    <meta http-equiv="Expires" content="0"/>
 
     <!-- Template Google Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Roboto:400,400i,500,500i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
@@ -24,9 +20,46 @@
 
     <!-- CSS Skin File -->
     <link href="css/skins/yellow.css" rel="stylesheet">
-
-    <!-- Modernizr JS File -->
+    <link rel="stylesheet" href="dist/jquery.flipster.min.css">
+   
+   <!-- Modernizr JS File -->
     <script src="js/modernizr.custom.js"></script>
+
+    <style> 
+        body { 
+            animation: fadeInAnimation ease 7s; 
+            animation-iteration-count: 1; 
+            animation-fill-mode: backwards; 
+        } 
+        @keyframes fadeInAnimation { 
+            0% { 
+                opacity: 0; 
+            } 
+            100% { 
+                opacity: 1; 
+            } 
+        } 
+ 
+
+.container { margin: 0px auto; max-width: 960px; }
+
+.zoom {
+  border: solid 5px #FC5185;
+  transition: border-width 0.6s linear;
+  width: 100px;
+  height: 100px;
+  margin: 0 auto;
+  opacity: 0.7;
+
+}
+
+.zoom:hover {
+ opacity: 1;
+ border-width: 2px;
+ border-color: white;
+}
+
+    </style>
 </head>
 
 <body class="home">
@@ -60,7 +93,7 @@
         </li>
         <li class="icon-box">
             <i class="fa fa-book"></i>
-            <a href="projects.html">
+            <a href="blog.html">
                 <h2>Projects</h2>
             </a>
         </li>
@@ -78,7 +111,7 @@
                 <li><a href="about.html"><i class="fa fa-user"></i><span>About</span></a></li>
                 <li><a href="portfolio.html"><i class="fa fa-folder-open"></i><span>Portfolio</span></a></li>
                 <li><a href="contact.html"><i class="fa fa-envelope-open"></i><span>Contact</span></a></li>
-                <li><a href="projects.html"><i class="fa fa-book"></i><span>Projects</span></a></li>
+                <li><a href="blog.html"><i class="fa fa-comments"></i><span>Blog</span></a></li>
             </ul>
         </div>
     </nav>
@@ -93,16 +126,27 @@
         <div class="col-12 col-lg-8 offset-lg-4 home-details text-left text-sm-center text-lg-left">
             <div>
                 <img src="img/photo.small.jpg" class="img-fluid main-img-mobile d-none d-sm-block d-lg-none" alt="my picture" />
-                <h6 class="text-uppercase open-sans-font mb-0 d-block d-sm-none d-lg-block">Hello...</h6>
                 <h1 class="text-uppercase poppins-font"><span>I'm</span> Chad D. Mills</h1>
-                <p class="open-sans-font">I'm a Houston based <span class="jobTitle">UX Designer, Strategist & Researcher</span> passionate about delivering RICH & INTUITIVE experiences on <u>BOTH</u> WEB & MOBILE.
-                <br>
-                <br>
-                Connect with me:</p>
-                <a data-toggle="tooltip" title="Click to view my Twitter Profile" class="socialLink" href="https://www.twitter.com/sirchad713" target="_blank"><i class="fa fa-twitter" aria-hidden="true" style="font-size:20px;"></i></a>&nbsp; &nbsp;<a data-toggle="tooltip" title="Click to view my LInkedIn Profile" class="socialLink" href="https://www.linkedin.com/in/chadmills/" target="_blank"><i class="fa fa-linkedin" aria-hidden="true" style="font-size:20px;"></i></a><br><br>
-               <br>
-                <a href="about.html" class="btn btn-about">more about me ></a>
-            </div>
+             <a href="www.twitter.com"><i class="fa fa-twitter" aria-hidden="true" style="font-size:20px;"></i></a>&nbsp;&nbsp;<a href="www.linkedin.com" target="_blanl"><i class="fa fa-linkedin" aria-hidden="true" style="font-size:20px;color:white;"></i></a> 
+                <p class="open-sans-font">I'm a Houston based <font color="yellow"><b>UX Designer, Strategist & Researcher</b></font> passionate about delivering RICH & INTUITIVE experiences on BOTH WEB & MOBILE</p>
+                 <a href="about.html" class="btn btn-about">more about me > </a><br><br>
+                   <div align="center">
+    <h2>Featured Projects</h2>
+    <font size = "1" color="yellow">Select a case study below:</font>
+    <div id="carousel">
+            <ul class="flip-items">
+                <li data-flip-title="DHS Website">
+                    <div class="zoom"><a href="https://www.cnn.com" target="_blank"><img src="img/text1.gif"></a></div>
+                </li>
+                <li data-flip-title="PAW PATROL" >
+                    <div class="zoom"><img src="img/text2.gif" ></div>
+                 </li>
+                <li data-flip-title="Thumbjamz">
+                    <div class="zoom"><img src="img/text3.gif" ></div>
+                </li>
+            </ul>
+        </div>
+       
         </div>
     </div>
 </section>
@@ -120,6 +164,17 @@
 <script src="js/popper.min.js"></script>
 <script src="js/bootstrap.js"></script>
 <script src="js/custom.js"></script>
+<script src="dist/jquery.flipster.min.js"></script>
+<script>
+    //var coverflow = $("#coverflow").flipster();
+    var carousel = $("#carousel").flipster({
+    style: 'carousel',
+    spacing: -0.5,
+    nav: true,
+    buttons:   false,
+});
+</script>
+
 
 </body>
 

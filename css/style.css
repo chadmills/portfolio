@@ -5,6 +5,14 @@ html {
   height: 100%;
 }
 
+a:active {
+color: white;
+}
+
+a:hover {
+color: silver;
+}
+
 body {
   font-family: 'Poppins', sans-serif;
   font-size: 15px;
@@ -17,19 +25,6 @@ body {
   height: 100%;
   width: 100%;
   background-color: #111;
-}
-
-a {
-  color: #ffffff;
-}
-
-a:hover {
-  color:#c0c0c0;
-}
-
-.jobTitle {
-  color:#ffff4d;
-  font-weight: bold;
 }
 
 .poppins-font {
