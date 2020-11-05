@@ -128,21 +128,21 @@
                 <img src="img/photo.small.jpg" class="img-fluid main-img-mobile d-none d-sm-block d-lg-none" alt="my picture" />
                 <h1 class="text-uppercase poppins-font"><span>I'm</span> Chad D. Mills</h1>
              <a href="www.twitter.com"><i class="fa fa-twitter" aria-hidden="true" style="font-size:20px;"></i></a>&nbsp;&nbsp;<a href="www.linkedin.com" target="_blanl"><i class="fa fa-linkedin" aria-hidden="true" style="font-size:20px;color:white;"></i></a> 
-                <p class="open-sans-font">I'm a Houston based <font color="yellow"><b>UX Designer, Strategist & Researcher</b></font> passionate about delivering RICH & INTUITIVE experiences on BOTH WEB & MOBILE</p>
+                <p class="open-sans-font">I'm a Houston based <font id ="jobTitle" color="yellow"><b>UX Designer, Strategist & Researcher</b></font> passionate about delivering RICH & INTUITIVE experiences on BOTH WEB & MOBILE</p>
                  <a href="about.html" class="btn btn-about">more about me > </a><br><br>
                    <div align="center">
     <h2>Featured Projects</h2>
     <font size = "1" color="yellow">Select a case study below:</font>
     <div id="carousel">
             <ul class="flip-items">
-                <li data-flip-title="DHS Website">
-                    <div class="zoom"><a href="https://www.cnn.com" target="_blank"><img src="img/text1.gif"></a></div>
+                <li id ="caseStudy" data-flip-title="DHS Website">
+                    <div class="zoom"><a href="https://www.cnn.com" target="_blank"><img src="img/dhs.gif"></a></div>
                 </li>
-                <li data-flip-title="PAW PATROL" >
-                    <div class="zoom"><img src="img/text2.gif" ></div>
+                <li id ="caseStudy" data-flip-title="PAW PLAY" >
+                    <div class="zoom"><img src="img/pawplay.gif" ></div>
                  </li>
-                <li data-flip-title="Thumbjamz">
-                    <div class="zoom"><img src="img/text3.gif" ></div>
+                <li id = "caseStudy" data-flip-title="Thumbjamz">
+                    <div class="zoom"><img src="img/tj_small.gif" ></div>
                 </li>
             </ul>
         </div>
@@ -153,6 +153,7 @@
 <!-- Main Content Ends -->
 
 <!-- Template JS Files -->
+
 <script src="js/jquery-3.5.0.min.js"></script>
 <script src="js/preloader.min.js"></script>
 <script src="js/fm.revealator.jquery.min.js"></script>
@@ -173,7 +174,25 @@
     nav: true,
     buttons:   false,
 });
+
+
+$(document).ready(function () {
+
+function Pulse(Target, State) {
+    //Every 750ms, fade between half and full opacity
+    $(Target).fadeTo(750, State?1:.5, function() {Pulse(Target, !State)});
+}
+
+$("#jobTitle").hover(function () {
+    $(this).stop()
+    Pulse(this);
+}, function () {
+    $(this).stop(false, true).fadeTo(200, 1); //200ms to return to full opacity on mouse out
+});
+});
+
 </script>
+
 
 
 </body>
