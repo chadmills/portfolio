@@ -31,6 +31,7 @@
 <!--[if lt IE 9]> <script src="js/modernizr.custom.js?ver=3"></script> <![endif]-->
 <!-- /Styles -->
 <LINK REL="SHORTCUT ICON" HREF="https://chadmills.github.io/portfolio/v2/html/img/cdm.ico">
+	    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/js/all.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
 </head>
 
@@ -1254,7 +1255,8 @@ Salesforce (SF), Marketing Cloud Engagement (formerly SF Marketing Cloud), and M
 				<div class="right_bottom">
 					<a href="#contact">
 						<span class="circle"></span>
-						<span class="text">I’m available remotely for hire.</span>
+						<span class="text">I’m available remotely for hire.&nbsp;<i class="fab fa-html5 icon html-icon" title="skilled in HTML5" style="color: red; font-size: 26px;"></i>
+    <i class="fab fa-css3-alt icon css3-icon" style="color: blue; font-size: 26px;"></i></span>
 					</a>
 				</div>
 			</div>
@@ -1328,6 +1330,29 @@ Salesforce (SF), Marketing Cloud Engagement (formerly SF Marketing Cloud), and M
 <!-- /Scripts -->
 
 <script async defer src="https://tools.luckyorange.com/core/lo.js?site-id=de9e898b"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script>
+    $(document).ready(function () {
+      // Create a pulsating animation dynamically with JavaScript
+      const pulsateKeyframes = `
+        @keyframes pulsate {
+          0% { transform: scale(1); opacity: 1; }
+          50% { transform: scale(1.2); opacity: 0.7; }
+          100% { transform: scale(1); opacity: 1; }
+        }
+      `;
 
+      // Inject the keyframes into a <style> tag
+      const style = document.createElement('style');
+      style.type = 'text/css';
+      style.innerHTML = pulsateKeyframes;
+      document.head.appendChild(style);
+
+      // Add animation dynamically to the HTML icon
+      $('.html-icon').css({
+        animation: 'pulsate 1.5s infinite'
+      });
+    });
+  </script>
 </body>
 </html>
