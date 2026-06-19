@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Experience Submitted | EWCCB</title>
+  <link rel="icon" type="image/png" href="favicon.png">
+  <link rel="apple-touch-icon" href="favicon.png">
+
+  <!-- EWCCB Thank You Page v0.1
+       Purpose: confirmation page after experience.html form submission.
+       Protected assets: favicon line should remain in all future iterations.
+  -->
+
+  <style>
+    :root {
+      --cream: #f6ead8;
+      --muted: #cdbb9f;
+      --soft: rgba(246, 234, 216, 0.72);
+      --gold: #d6a84f;
+      --gold-2: #f2c66d;
+      --espresso: #201a16;
+      --dark: #110d0a;
+      --panel: rgba(43, 33, 27, 0.88);
+      --line: rgba(246, 234, 216, 0.16);
+      --success: #74d59b;
+      --shadow: 0 28px 90px rgba(0, 0, 0, 0.48);
+      --radius: 28px;
+      --font-main: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      --font-display: Georgia, "Times New Roman", serif;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      margin: 0;
+      min-height: 100%;
+      font-family: var(--font-main);
+      color: var(--cream);
+      background:
+        radial-gradient(circle at 20% 14%, rgba(214, 168, 79, 0.22), transparent 30%),
+        radial-gradient(circle at 82% 18%, rgba(151, 66, 38, 0.22), transparent 34%),
+        linear-gradient(145deg, #110d0a 0%, #201a16 48%, #0f0b09 100%);
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.026) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.026) 1px, transparent 1px);
+      background-size: 46px 46px;
+      mask-image: linear-gradient(to bottom, rgba(0,0,0,0.85), transparent 88%);
+    }
+
+    .stage {
+      width: min(980px, calc(100% - 32px));
+      min-height: 100vh;
+      margin: 0 auto;
+      display: grid;
+      place-items: center;
+      padding: 44px 0;
+      position: relative;
+      z-index: 1;
+    }
+
+    .card {
+      width: 100%;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: linear-gradient(165deg, rgba(43,33,27,0.94), rgba(16,12,9,0.92));
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      backdrop-filter: blur(18px);
+      animation: cardIn 720ms cubic-bezier(.18,.95,.22,1.08) both;
+    }
+
+    @keyframes cardIn {
+      from {
+        opacity: 0;
+        transform: translateY(28px) scale(0.98);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    .inner {
+      display: grid;
+      grid-template-columns: 0.9fr 1.1fr;
+      gap: 0;
+      min-height: 560px;
+    }
+
+    .left {
+      padding: clamp(28px, 5vw, 52px);
+      border-right: 1px solid var(--line);
+      background:
+        radial-gradient(circle at 24% 18%, rgba(214,168,79,0.18), transparent 36%),
+        rgba(0,0,0,0.10);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 28px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .brand-mark {
+      width: 50px;
+      height: 50px;
+      border-radius: 15px;
+      border: 1px solid rgba(214,168,79,0.55);
+      display: grid;
+      place-items: center;
+      color: var(--gold-2);
+      font-weight: 950;
+      background: rgba(214,168,79,0.10);
+      letter-spacing: -1px;
+    }
+
+    .brand-copy strong {
+      display: block;
+      font-family: var(--font-display);
+      font-size: 1.25rem;
+      line-height: 1;
+    }
+
+    .brand-copy span {
+      display: block;
+      margin-top: 5px;
+      color: var(--muted);
+      font-size: 0.76rem;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+    }
+
+    .privacy {
+      border: 1px solid rgba(246,234,216,0.13);
+      border-radius: 18px;
+      background: rgba(0,0,0,0.16);
+      padding: 18px;
+      color: var(--muted);
+      font-size: 0.9rem;
+      line-height: 1.55;
+    }
+
+    .privacy strong {
+      display: block;
+      color: var(--gold-2);
+      margin-bottom: 6px;
+    }
+
+    .right {
+      padding: clamp(32px, 6vw, 64px);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      text-align: left;
+    }
+
+    .status {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      width: fit-content;
+      border: 1px solid rgba(116,213,155,0.30);
+      color: var(--soft);
+      border-radius: 999px;
+      padding: 9px 12px;
+      font-size: 0.82rem;
+      margin-bottom: 22px;
+      background: rgba(116,213,155,0.08);
+    }
+
+    .dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: var(--success);
+      box-shadow: 0 0 16px var(--success);
+    }
+
+    h1 {
+      font-family: var(--font-display);
+      font-size: clamp(2.65rem, 7vw, 5.2rem);
+      line-height: 0.94;
+      letter-spacing: -0.055em;
+      margin: 0 0 24px;
+    }
+
+    .lead {
+      color: var(--muted);
+      font-size: 1.05rem;
+      line-height: 1.75;
+      margin: 0 0 26px;
+      max-width: 620px;
+    }
+
+    .journey-line {
+      border-left: 3px solid var(--gold);
+      padding-left: 18px;
+      color: var(--cream);
+      font-size: 1.08rem;
+      line-height: 1.6;
+      margin: 4px 0 30px;
+    }
+
+    .journey-line span {
+      color: var(--gold-2);
+      font-weight: 900;
+    }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 999px;
+      padding: 14px 20px;
+      font-weight: 950;
+      letter-spacing: 0.03em;
+      text-decoration: none;
+      transition: transform 160ms ease, box-shadow 160ms ease, background 160ms ease;
+    }
+
+    .btn-primary {
+      color: #15110d;
+      background: linear-gradient(135deg, var(--gold-2), var(--gold));
+      box-shadow: 0 12px 30px rgba(214,168,79,0.25);
+    }
+
+    .btn-secondary {
+      color: var(--cream);
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.06);
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+    }
+
+    .small-note {
+      margin-top: 28px;
+      color: rgba(246,234,216,0.52);
+      font-size: 0.86rem;
+      line-height: 1.55;
+    }
+
+    @media (max-width: 760px) {
+      .inner {
+        grid-template-columns: 1fr;
+      }
+
+      .left {
+        border-right: 0;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .right {
+        text-align: left;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="stage" aria-label="EWCCB thank you page">
+    <section class="card">
+      <div class="inner">
+        <aside class="left">
+          <div class="brand">
+            <div class="brand-mark">713</div>
+            <div class="brand-copy">
+              <strong>EWCCB</strong>
+              <span>Experience Submitted</span>
+            </div>
+          </div>
+
+          <div class="privacy">
+            <strong>Your privacy matters.</strong>
+            Information submitted through this demonstration is used only to deliver the selected experience and will never be sold or shared.
+          </div>
+        </aside>
+
+        <section class="right">
+          <div class="status"><span class="dot"></span> Experience request received</div>
+
+          <h1>Your experience is on the way.</h1>
+
+          <p class="lead">
+            Thanks for exploring EWCCB. Your selected premium marketing experience is being prepared. Check your inbox or mobile device shortly.
+          </p>
+
+          <div class="journey-line">
+            The portfolio ends here.<br>
+            <span>The journey continues in your inbox.</span>
+          </div>
+
+          <div class="actions">
+            <a class="btn btn-primary" href="experience.html">Choose Another Experience</a>
+            <a class="btn btn-secondary" href="../index.html">Return to Portfolio</a>
+          </div>
+
+          <p class="small-note">
+            This confirmation page is part of the EWCCB recruiter journey and will later connect to the full Klaviyo-powered email/SMS automation flow.
+          </p>
+        </section>
+      </div>
+    </section>
+  </main>
+</body>
+</html>

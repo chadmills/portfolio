@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Experience What Chad Can Build</title>
+  <LINK REL="SHORTCUT ICON" HREF="https://chadmills.github.io/portfolio/v2/html/img/cdm.ico">
+  <!-- CDM UX+E Intro v2.0
+       Source of truth: minimal white intro, recreated logo, dramatic entrance/exit,
+       typewriter text, START HERE button, version/journey copy.
+  -->
+  <style>
+    :root {
+      --yellow: #f6c21a;
+      --ink: #1d1d1f;
+      --soft: #8c8c8c;
+      --white: #ffffff;
+      --espresso: #241913;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      margin: 0;
+      width: 100%;
+      min-height: 100%;
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--white);
+      color: var(--ink);
+      overflow: hidden;
+    }
+
+    .stage {
+      width: 100vw;
+      height: 100vh;
+      background: var(--white);
+      display: grid;
+      place-items: center;
+      position: relative;
+    }
+
+    .logo-wrap {
+      position: absolute;
+      inset: 0;
+      display: grid;
+      place-items: center;
+      animation:
+        logoEnter 900ms cubic-bezier(.18,.95,.22,1.16) 120ms both,
+        logoPulse 520ms ease-in-out 1120ms both,
+        logoExit 760ms cubic-bezier(.77,0,.18,1) 2100ms forwards;
+      will-change: transform, opacity;
+    }
+
+    .cdm-logo {
+      width: 190px;
+      height: 190px;
+      border-radius: 50%;
+      background: var(--yellow);
+      border: 12px solid #4b4640;
+      color: #111111;
+      display: grid;
+      place-items: center;
+      box-shadow: 0 18px 55px rgba(0, 0, 0, 0.13);
+      position: relative;
+    }
+
+    .logo-inner {
+      text-align: center;
+      transform: translateY(2px);
+      line-height: 1;
+    }
+
+    .logo-cdm {
+      font-size: 56px;
+      font-weight: 900;
+      letter-spacing: -4px;
+      line-height: 0.92;
+    }
+
+    .logo-sub {
+      margin-top: 7px;
+      font-size: 20px;
+      font-weight: 800;
+      letter-spacing: -1px;
+    }
+
+    @keyframes logoEnter {
+      0% {
+        opacity: 0;
+        transform: translateY(42px) scale(0.34) rotate(-7deg);
+      }
+      68% {
+        opacity: 1;
+        transform: translateY(-8px) scale(1.11) rotate(1deg);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0) scale(1) rotate(0);
+      }
+    }
+
+    @keyframes logoPulse {
+      0% {
+        transform: scale(1);
+      }
+      45% {
+        transform: scale(1.075);
+      }
+      100% {
+        transform: scale(1);
+      }
+    }
+
+    @keyframes logoExit {
+      0% {
+        opacity: 1;
+        transform: translateX(0) translateY(0) scale(1);
+      }
+      100% {
+        opacity: 0;
+        transform: translateX(120vw) translateY(-18vh) scale(0.72) rotate(12deg);
+      }
+    }
+
+    .message {
+      text-align: center;
+      opacity: 0;
+      animation: messageIn 120ms linear 3020ms forwards;
+      padding: 0 24px;
+    }
+
+    @keyframes messageIn {
+      to {
+        opacity: 1;
+      }
+    }
+
+    .type-line {
+      min-height: 54px;
+      font-size: clamp(2rem, 5vw, 4.2rem);
+      font-weight: 800;
+      letter-spacing: -0.055em;
+      line-height: 1.05;
+      color: var(--ink);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .cursor {
+      display: inline-block;
+      width: 4px;
+      height: 0.88em;
+      margin-left: 8px;
+      background: var(--ink);
+      animation: blink 780ms steps(1) infinite;
+      transform: translateY(4px);
+    }
+
+    @keyframes blink {
+      0%, 48% {
+        opacity: 1;
+      }
+      49%, 100% {
+        opacity: 0;
+      }
+    }
+
+    .coming-soon {
+      opacity: 0;
+      transform: translateY(18px);
+      margin-top: 34px;
+      animation: buttonIn 520ms ease 5900ms forwards;
+    }
+
+    @keyframes buttonIn {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .btn {
+      border: 0;
+      border-radius: 999px;
+      background: var(--yellow);
+      color: #111111;
+      font-size: 0.96rem;
+      font-weight: 900;
+      letter-spacing: 0.16em;
+      padding: 16px 30px;
+      cursor: pointer;
+      box-shadow: 0 12px 30px rgba(246, 194, 26, 0.32);
+      animation: buttonPulse 1.85s ease-in-out 6500ms infinite;
+    }
+
+    .btn:active {
+      transform: scale(0.98);
+    }
+
+    @keyframes buttonPulse {
+      0% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(246, 194, 26, 0.42);
+      }
+      55% {
+        transform: scale(1.035);
+        box-shadow: 0 0 0 16px rgba(246, 194, 26, 0);
+      }
+      100% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(246, 194, 26, 0);
+      }
+    }
+
+    .promise {
+      opacity: 0;
+      margin-top: 24px;
+      color: var(--soft);
+      font-size: 0.92rem;
+      line-height: 1.65;
+      animation: promiseIn 620ms ease 6500ms forwards;
+    }
+
+    @keyframes promiseIn {
+      to {
+        opacity: 1;
+      }
+    }
+
+    .version {
+      font-size: 0.78rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+      color: #a8a8a8;
+    }
+
+    .transition-layer {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 20;
+      overflow: hidden;
+    }
+
+    .transition-circle {
+      position: absolute;
+      left: var(--x, 50%);
+      top: var(--y, 50%);
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      background: var(--yellow);
+      transform: translate(-50%, -50%) scale(0);
+      opacity: 0;
+    }
+
+    .transition-panel {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 20% 12%, rgba(246, 194, 26, 0.18), transparent 28%),
+        linear-gradient(145deg, #2b211b 0%, #1c130f 100%);
+      opacity: 0;
+      transform: scale(1.04);
+      display: grid;
+      place-items: center;
+      color: #f6ead8;
+      font-weight: 900;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      font-size: 0.82rem;
+    }
+
+    .stage.is-transitioning .message {
+      animation: none;
+      opacity: 1;
+      transform: translateY(-12px);
+      transition: opacity 300ms ease, transform 300ms ease;
+    }
+
+    .stage.is-transitioning .transition-circle {
+      animation: circleWipe 720ms cubic-bezier(.76,0,.24,1) forwards;
+    }
+
+    .stage.is-transitioning .transition-panel {
+      animation: panelIn 520ms ease 380ms forwards;
+    }
+
+    @keyframes circleWipe {
+      0% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(0);
+      }
+      100% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(95);
+      }
+    }
+
+    @keyframes panelIn {
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    @media (max-width: 560px) {
+      .cdm-logo {
+        width: 158px;
+        height: 158px;
+        border-width: 10px;
+      }
+
+      .logo-cdm {
+        font-size: 47px;
+      }
+
+      .logo-sub {
+        font-size: 17px;
+      }
+
+      .type-line {
+        min-height: 96px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="stage" id="stage" aria-label="CDM UX+E Intro">
+    <section class="logo-wrap" aria-label="CDM UX+E logo animation">
+      <div class="cdm-logo">
+        <div class="logo-inner">
+          <div class="logo-cdm">CDM</div>
+          <div class="logo-sub">UX + E</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="message" aria-label="Intro message">
+      <div class="type-line">
+        <span id="typed"></span><span class="cursor" aria-hidden="true"></span>
+      </div>
+
+      <div class="coming-soon">
+        <button class="btn" id="startBtn" type="button">START HERE</button>
+      </div>
+
+      <div class="promise">
+        <div class="version">Version 2.0</div>
+        <div>The portfolio ends here.</div>
+        <div>The experience begins now.</div>
+      </div>
+    </section>
+
+    <div class="transition-layer" aria-hidden="true">
+      <div class="transition-circle" id="transitionCircle"></div>
+      <div class="transition-panel">Loading experience...</div>
+    </div>
+  </main>
+
+  <script>
+    const typed = document.getElementById("typed");
+    const baseText = "Experience what Chad can build";
+    const startDelay = 3220;
+    const typeSpeed = 58;
+    const dotDelay = 360;
+
+    function sleep(ms) {
+      return new Promise(resolve => setTimeout(resolve, ms));
+    }
+
+    async function typeIntro() {
+      await sleep(startDelay);
+
+      for (let i = 0; i <= baseText.length; i++) {
+        typed.textContent = baseText.slice(0, i);
+        await sleep(typeSpeed);
+      }
+
+      await sleep(260);
+      typed.textContent = baseText + ".";
+      await sleep(dotDelay);
+      typed.textContent = baseText + "..";
+      await sleep(dotDelay);
+      typed.textContent = baseText + "...";
+    }
+
+    typeIntro();
+
+    const stage = document.getElementById("stage");
+    const startBtn = document.getElementById("startBtn");
+    const transitionCircle = document.getElementById("transitionCircle");
+
+    startBtn.addEventListener("click", function(event) {
+      const rect = startBtn.getBoundingClientRect();
+      const x = rect.left + rect.width / 2;
+      const y = rect.top + rect.height / 2;
+
+      transitionCircle.style.setProperty("--x", x + "px");
+      transitionCircle.style.setProperty("--y", y + "px");
+
+      stage.classList.add("is-transitioning");
+
+      setTimeout(function() {
+        window.location.href = "experience.html";
+      }, 1050);
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cheers Friday | Chizzle713</title>
+  <link rel="icon" type="image/png" href="favicon.png" />
+
+  <!-- Cheers Friday Landing Page v1.2
+       Added one-time auto-scroll to story section after hero loads.
+       Preserved favicon, cheers.webp, layout, Chizzle713 look/feel.
+  -->
+
+  <style>
+    :root {
+      --ink: #15110d;
+      --charcoal: #201a16;
+      --espresso: #2b211b;
+      --cream: #f6ead8;
+      --muted: #cdbb9f;
+      --gold: #d6a84f;
+      --gold-2: #f2c66d;
+      --line: rgba(246, 234, 216, 0.16);
+      --panel: rgba(32, 26, 22, 0.88);
+      --shadow: 0 28px 90px rgba(0, 0, 0, 0.50);
+      --radius: 26px;
+      --font-main: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      --font-display: Georgia, "Times New Roman", serif;
+    }
+
+    * { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      color: var(--cream);
+      font-family: var(--font-main);
+      background:
+        radial-gradient(circle at 18% 10%, rgba(214, 168, 79, 0.20), transparent 28%),
+        radial-gradient(circle at 85% 18%, rgba(151, 66, 38, 0.22), transparent 34%),
+        linear-gradient(145deg, #110d0a 0%, #201a16 45%, #0f0b09 100%);
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+      background-size: 44px 44px;
+      mask-image: linear-gradient(to bottom, rgba(0,0,0,0.85), transparent 88%);
+      z-index: 0;
+    }
+
+    .entry-wipe {
+      position: fixed;
+      inset: 0;
+      background: #ffffff;
+      z-index: 50;
+      animation: revealPage 1250ms cubic-bezier(.77,0,.18,1) forwards;
+      transform-origin: top;
+    }
+
+    .entry-wipe::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 50% 50%, rgba(246, 194, 26, 0.40), transparent 34%),
+        linear-gradient(145deg, #2b211b 0%, #15110d 100%);
+      transform: translateY(100%);
+      animation: brownSweep 900ms cubic-bezier(.77,0,.18,1) 180ms forwards;
+    }
+
+    @keyframes brownSweep { to { transform: translateY(0); } }
+
+    @keyframes revealPage {
+      0%, 72% { opacity: 1; visibility: visible; }
+      100% { opacity: 0; visibility: hidden; pointer-events: none; }
+    }
+
+    .page {
+      width: min(1180px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 28px 0 58px;
+      position: relative;
+      z-index: 1;
+      opacity: 0;
+      transform: translateY(16px);
+      animation: pageIn 780ms ease 850ms forwards;
+    }
+
+    @keyframes pageIn {
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 18px;
+      padding: 12px 0 30px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .mark {
+      width: 50px;
+      height: 50px;
+      border-radius: 16px;
+      border: 1px solid rgba(214,168,79,0.50);
+      background: linear-gradient(145deg, rgba(214,168,79,0.20), rgba(0,0,0,0.25));
+      display: grid;
+      place-items: center;
+      color: var(--gold-2);
+      font-weight: 950;
+      letter-spacing: -1px;
+      box-shadow: 0 0 28px rgba(214,168,79,0.14);
+    }
+
+    .brand-copy strong {
+      display: block;
+      font-family: var(--font-display);
+      font-size: 1.3rem;
+      line-height: 1.05;
+    }
+
+    .brand-copy span {
+      display: block;
+      margin-top: 4px;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      font-size: 0.76rem;
+    }
+
+    .nav-pill {
+      border: 1px solid var(--line);
+      color: var(--muted);
+      background: rgba(0,0,0,0.14);
+      border-radius: 999px;
+      padding: 10px 14px;
+      font-size: 0.84rem;
+      text-align: center;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: 0.95fr 1.05fr;
+      gap: 28px;
+      align-items: stretch;
+    }
+
+    .flyer-card,
+    .content-card,
+    .story-card {
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--panel);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(16px);
+      overflow: hidden;
+    }
+
+    .flyer-card {
+      padding: 18px;
+      transform: translateX(-18px);
+      opacity: 0;
+      animation: flyerIn 760ms ease 1100ms forwards;
+    }
+
+    @keyframes flyerIn {
+      to { transform: translateX(0); opacity: 1; }
+    }
+
+    .flyer-card img {
+      display: block;
+      width: 100%;
+      height: auto;
+      border-radius: 20px;
+      border: 1px solid rgba(246,234,216,0.12);
+    }
+
+    .content-card {
+      padding: clamp(30px, 5vw, 58px);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      position: relative;
+      transform: translateY(18px);
+      opacity: 0;
+      animation: contentIn 760ms ease 1320ms forwards;
+    }
+
+    @keyframes contentIn {
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    .content-card::after {
+      content: "";
+      position: absolute;
+      width: 300px;
+      height: 300px;
+      right: -110px;
+      bottom: -120px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(214,168,79,0.22), transparent 70%);
+      pointer-events: none;
+    }
+
+    .eyebrow {
+      color: var(--gold-2);
+      text-transform: uppercase;
+      letter-spacing: 0.22em;
+      font-size: 0.76rem;
+      font-weight: 900;
+      margin-bottom: 18px;
+      position: relative;
+      z-index: 1;
+    }
+
+    h1 {
+      font-family: var(--font-display);
+      font-size: clamp(3rem, 7vw, 6rem);
+      line-height: 0.90;
+      margin: 0 0 22px;
+      letter-spacing: -0.06em;
+      position: relative;
+      z-index: 1;
+    }
+
+    .lead {
+      color: var(--muted);
+      font-size: 1.07rem;
+      line-height: 1.75;
+      max-width: 650px;
+      margin: 0 0 18px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .lead strong { color: var(--cream); }
+
+    .details {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin: 28px 0 0;
+      position: relative;
+      z-index: 1;
+    }
+
+    .detail {
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 16px;
+      background: rgba(0,0,0,0.18);
+    }
+
+    .detail strong {
+      display: block;
+      color: var(--gold-2);
+      margin-bottom: 6px;
+      font-size: 0.93rem;
+    }
+
+    .detail span {
+      display: block;
+      color: var(--muted);
+      font-size: 0.78rem;
+      line-height: 1.4;
+    }
+
+    .story {
+      margin-top: 34px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+    }
+
+    .story-card {
+      padding: 22px;
+      background: rgba(32, 26, 22, 0.72);
+    }
+
+    .story-card strong {
+      display: block;
+      color: var(--gold-2);
+      font-size: 0.9rem;
+      margin-bottom: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+    }
+
+    .story-card p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.92rem;
+      line-height: 1.6;
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(26px);
+      transition: opacity 760ms ease, transform 760ms ease;
+    }
+
+    .reveal.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .reveal.delay-1 { transition-delay: 120ms; }
+    .reveal.delay-2 { transition-delay: 240ms; }
+    .reveal.delay-3 { transition-delay: 360ms; }
+
+    .button-row {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 30px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .btn {
+      border: 0;
+      cursor: pointer;
+      border-radius: 999px;
+      padding: 15px 22px;
+      font-weight: 950;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: transform 160ms ease, opacity 160ms ease, box-shadow 160ms ease;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: #15110d;
+      background: linear-gradient(135deg, var(--gold-2), var(--gold));
+      box-shadow: 0 12px 30px rgba(214,168,79,0.26);
+      animation: pulse 2.2s infinite;
+    }
+
+    .btn.secondary {
+      color: var(--cream);
+      background: rgba(255,255,255,0.06);
+      border: 1px solid var(--line);
+      box-shadow: none;
+      animation: none;
+    }
+
+    .btn:hover { transform: translateY(-2px); }
+
+    @keyframes pulse {
+      0% { box-shadow: 0 0 0 0 rgba(214,168,79,0.36); }
+      70% { box-shadow: 0 0 0 14px rgba(214,168,79,0); }
+      100% { box-shadow: 0 0 0 0 rgba(214,168,79,0); }
+    }
+
+    .footer-note {
+      color: rgba(246,234,216,0.54);
+      font-size: 0.82rem;
+      text-align: center;
+      margin-top: 26px;
+      opacity: 0;
+      animation: footerIn 700ms ease 1650ms forwards;
+    }
+
+    @keyframes footerIn {
+      to { opacity: 1; }
+    }
+
+    @media (max-width: 920px) {
+      .hero,
+      .story {
+        grid-template-columns: 1fr;
+      }
+
+      .flyer-card {
+        max-width: 620px;
+        margin: 0 auto;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .nav {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .details {
+        grid-template-columns: 1fr;
+      }
+
+      .content-card {
+        padding: 30px 24px;
+      }
+
+      .button-row .btn {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="entry-wipe" aria-hidden="true"></div>
+
+  <main class="page">
+    <nav class="nav">
+      <div class="brand">
+        <div class="mark">713</div>
+        <div class="brand-copy">
+          <strong>Chizzle713</strong>
+          <span>Cheers Friday Experience</span>
+        </div>
+      </div>
+
+      <div class="nav-pill">EWCCB · Lifecycle Marketing Demo</div>
+    </nav>
+
+    <section class="hero">
+      <article class="flyer-card" aria-label="Cheers Friday flyer">
+        <img src="cheers.webp" alt="Cheers Friday flyer">
+      </article>
+
+      <article class="content-card">
+        <div class="eyebrow">You entered the experience</div>
+
+        <h1>Cheers Friday is live.</h1>
+
+        <p class="lead">
+          This landing page continues the journey that began in the inbox — moving from a clean email presentation into a richer Chizzle713-inspired digital experience.
+        </p>
+
+        <p class="lead">
+          The goal is to demonstrate how <strong>strategy, creative direction, email, landing pages, and lifecycle thinking</strong> connect into one polished customer journey.
+        </p>
+
+        <div class="details" aria-label="Experience details">
+          <div class="detail">
+            <strong>Email</strong>
+            <span>Inbox entry point with a premium CTA.</span>
+          </div>
+
+          <div class="detail">
+            <strong>Landing</strong>
+            <span>Branded continuation of the experience.</span>
+          </div>
+
+          <div class="detail">
+            <strong>Lifecycle</strong>
+            <span>Designed as part of a larger automation journey.</span>
+          </div>
+        </div>
+
+        <div class="button-row">
+          <a class="btn" href="experience.html">Choose Another Experience</a>
+          <a class="btn secondary" href="thankyou.html">Continue Journey</a>
+        </div>
+      </article>
+    </section>
+
+    <section class="story" aria-label="Cheers Friday story">
+      <article class="story-card reveal">
+        <strong>01 · Inbox</strong>
+        <p>The experience begins with a clean, responsive email that invites the user into the next step of the journey.</p>
+      </article>
+
+      <article class="story-card reveal delay-1">
+        <strong>02 · Transition</strong>
+        <p>The click does more than open a page. It moves the user from message to moment with visual continuity.</p>
+      </article>
+
+      <article class="story-card reveal delay-2">
+        <strong>03 · Atmosphere</strong>
+        <p>The landing page shifts into a darker Chizzle713 world where the flyer, tone, and CTA feel intentional.</p>
+      </article>
+
+      <article class="story-card reveal delay-3">
+        <strong>04 · Lifecycle</strong>
+        <p>This is the foundation for a larger automated journey across email, SMS, web, and follow-up messaging.</p>
+      </article>
+    </section>
+
+    <div class="footer-note">
+      Experience What Chad Can Build · Chizzle713 · Cheers Friday
+    </div>
+  </main>
+
+  <script>
+    const revealItems = document.querySelectorAll(".reveal");
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("is-visible");
+          observer.unobserve(entry.target);
+        }
+      });
+    }, {
+      threshold: 0.18
+    });
+
+    revealItems.forEach((item) => observer.observe(item));
+
+    const storySection = document.querySelector(".story");
+    let autoScrollStarted = false;
+
+    function startAutoScroll() {
+      if (autoScrollStarted || !storySection) return;
+      autoScrollStarted = true;
+
+      storySection.scrollIntoView({
+        behavior: "smooth",
+        block: "center"
+      });
+    }
+
+    window.addEventListener("load", () => {
+      setTimeout(startAutoScroll, 2800);
+    });
+  </script>
+</body>
+</html>
