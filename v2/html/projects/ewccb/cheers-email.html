@@ -2,13 +2,14 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Cheers Friday Awaits</title>
-  <LINK REL="SHORTCUT ICON" HREF="https://chadmills.github.io/portfolio/v2/html/img/cdm.ico">
+  <title>Experience What Chad Can Build</title>
+  <link rel="shortcut icon" href="https://chadmills.github.io/portfolio/v2/html/img/cdm.ico">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <!-- Cheers Friday Email v1.1
+  <!-- Cheers Friday Email v1.2
        EWCCB / Chizzle713 portfolio demonstration email.
        Hero image: cheers.webp
+       Added recruiter-guided CTA auto-scroll and CTA bounce animation.
   -->
 
   <style>
@@ -55,8 +56,30 @@
       }
     }
 
+    @keyframes ctaBounce {
+      0% {
+        transform: translateY(0);
+      }
+
+      40% {
+        transform: translateY(-10px);
+      }
+
+      70% {
+        transform: translateY(4px);
+      }
+
+      100% {
+        transform: translateY(0);
+      }
+    }
+
     .cta {
       animation: ctaPulse 2s ease-in-out infinite;
+    }
+
+    .cta-bounce {
+      animation: ctaBounce 0.8s ease-out;
     }
   </style>
 </head>
@@ -157,6 +180,7 @@
 
               <!-- CTA -->
               <table role="presentation"
+                     id="cta-section"
                      cellspacing="0"
                      cellpadding="0"
                      border="0"
@@ -264,6 +288,31 @@
     </tr>
 
   </table>
+
+  <script>
+    window.addEventListener('load', function () {
+
+      setTimeout(function () {
+
+        const cta = document.getElementById('cta-section');
+
+        if (cta) {
+
+          cta.scrollIntoView({
+            behavior: 'smooth',
+            block: 'center'
+          });
+
+          setTimeout(function () {
+            cta.classList.add('cta-bounce');
+          }, 900);
+
+        }
+
+      }, 2000);
+
+    });
+  </script>
 
 </body>
 </html>
