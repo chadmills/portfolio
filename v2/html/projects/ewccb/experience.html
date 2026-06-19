@@ -5,11 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>EWCCB Experience</title>
   <LINK REL="SHORTCUT ICON" HREF="https://chadmills.github.io/portfolio/v2/html/img/cdm.ico">
-  <!-- EWCCB Experience Form v0.2
-       Separate destination page loaded from introv2.html transition.
-       Update: builds integration-ready payload, supports future backend endpoint,
-       stores request data for thankyou.html, and redirects after capture.
-  -->
+<!-- EWCCB Experience Form v0.3
+     Separate destination page loaded from introv2.html transition.
+     Update: connected to Cloudflare Worker endpoint for Klaviyo profile/event automation.
+-->
   <style>
     :root {
       --ink: #15110d;
@@ -326,7 +325,7 @@
         </form>
 
         <div class="status-note">
-          Prototype state: form UI is ready. Klaviyo event/profile integration comes next.
+          Live state: this form now submits to the EWCCB automation endpoint and triggers the Klaviyo experience flow.
         </div>
       </section>
     </section>
@@ -343,18 +342,16 @@
     const firstNameError = document.getElementById("firstNameError");
     const contactError = document.getElementById("contactError");
 
-    /*
-      Future backend endpoint goes here.
+ /*
+  Live Cloudflare Worker endpoint.
 
-      IMPORTANT:
-      Do not place a Klaviyo private API key in this HTML file.
-      When ready, create a backend/serverless endpoint that receives this payload
-      and sends the profile/event data to Klaviyo securely.
+  IMPORTANT:
+  Do not place a Klaviyo private API key in this HTML file.
+  The private key lives securely inside the Cloudflare Worker as:
+  KLAVIYO_API_KEY
+*/
 
-      Example:
-      const EWCCB_ENDPOINT = "https://your-domain.com/api/ewccb-demo-request";
-    */
-    const EWCCB_ENDPOINT = "";
+    const EWCCB_ENDPOINT = "https://ewccb-demo-endpoint.team-723.workers.dev";
 
     const copy = {
       email: {
@@ -458,7 +455,7 @@
         event_name: "EWCCB Experience Requested",
         source: "EWCCB Experience Page",
         project: "Experience What Chad Can Build",
-        version: "experience-form-v0.2",
+        version: "experience-form-v0.3",
         experience_type: experienceType.value,
         experience_label: experienceType.options[experienceType.selectedIndex].text,
         channel: selected.channel,
@@ -470,11 +467,10 @@
     }
 
     async function sendRequest(payload) {
-      /*
-        Local/static fallback:
-        If EWCCB_ENDPOINT is empty, we skip network posting for now.
-        This lets the page work locally and on GitHub Pages before the backend exists.
-      */
+/*
+  Sends the experience request payload to the live Cloudflare Worker endpoint.
+  The Worker securely forwards the event/profile data to Klaviyo.
+*/
       if (!EWCCB_ENDPOINT) {
         console.log("EWCCB payload ready for future Klaviyo endpoint:", payload);
         return { ok: true, mode: "local-preview" };
