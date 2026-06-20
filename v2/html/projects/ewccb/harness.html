@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>SlickText Native Test</title>
+
+  <link href="https://static.slicktext.com/forms/styles/reset.css" rel="stylesheet">
+  <link href="https://static.slicktext.com/forms/styles/form.css" rel="stylesheet">
+
+  <style>
+    body {
+      margin: 0;
+      background: #111;
+      color: #fff;
+      font-family: Arial, sans-serif;
+      padding: 40px;
+    }
+
+    h1 { color: #d6a84f; }
+
+    .panel {
+      background: #fff;
+      color: #333;
+      padding: 24px;
+      border-radius: 16px;
+      margin-top: 20px;
+      min-height: 520px;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>SlickText Native Form Test</h1>
+  <p>This uses SlickText’s own WebForm module.</p>
+
+  <div class="panel">
+    <div id="stForm" class="webForm">
+      <div id="stFormBackground">
+        <div id="stFormViews">
+
+          <div class="stFormView" style="padding:20px;color:rgb(62,74,87);">
+            <div class="container" style="max-width:500px;">
+              <h1 style='font-family:Arial;color:rgb(3,147,195);font-size:30px;'>
+                Experience What Chad Can Build
+              </h1>
+
+              <p style="margin:10px;color:rgb(62,74,87);">
+                Enter your first name and mobile number to receive the EWCCB demonstration experience.
+              </p>
+
+              <p class="errorText" style="color:rgb(195,3,3);" data-hide-empty="true"></p>
+
+              <input
+                type="text"
+                placeholder="First Name"
+                data-name="first_name"
+                data-required="true"
+                style="margin:10px 0;padding:14px;width:100%;border-radius:50px;border:1px solid #d0d0d0;"
+              >
+
+              <input
+                type="tel"
+                placeholder="Mobile Number"
+                data-name="mobile_number"
+                data-required="true"
+                style="margin:10px 0;padding:14px;width:100%;border-radius:50px;border:1px solid #d0d0d0;"
+              >
+
+              <a
+                class="button medium"
+                data-action="submit"
+                style="display:block;margin-top:18px;text-align:center;background-color:rgb(3,147,195);border-radius:50px;color:#fff;padding:14px;font-weight:700;">
+                Join Now
+              </a>
+
+              <p class="complianceStatement" style="font-size:11px;color:rgb(62,74,87);margin-top:18px;">
+                By subscribing, you agree to receive automated promotional messages. Reply <b>STOP</b> to opt out or <b>HELP</b> for help. Message &amp; data rates apply.
+              </p>
+            </div>
+          </div>
+
+          <div class="stFormView" style="color:rgb(62,74,87);">
+            <h1 style="color:rgb(3,147,195);">Check Your Texts</h1>
+            <p>We just sent you a message. Reply <strong>YES</strong> and we'll respond with your demo.</p>
+          </div>
+
+          <div class="stFormView" style="color:rgb(62,74,87);">
+            <h1 style="color:rgb(3,147,195);">Got It!</h1>
+            <p>Thanks for providing your information.</p>
+          </div>
+
+        </div>
+      </div>
+
+      <div id="stFormInactive">
+        <h1>Form Unavailable</h1>
+        <p>This form is currently unavailable.</p>
+      </div>
+    </div>
+  </div>
+
+  <script type="module">
+    import { WebForm } from "https://static.slicktext.com/forms/scripts/modules/WebForm.js";
+
+    new WebForm({
+      web_form_id: 1989,
+      _brand_id: 31558,
+      type: "page",
+      create_contacts: 1,
+      update_contacts: 1,
+      hide_mobile_number_field_on_update: 0,
+      reset_after_inactivity: 0,
+      reset_after_inactivity_value: 60,
+      reset_after_inactivity_unit: "second",
+      reset_after_submission: 0,
+      reset_after_submission_value: 10,
+      reset_after_submission_unit: "second",
+      active: 1,
+      api_base: "https://dev.slicktext.com/v1",
+      token: "436c084264d7823935675998090e13fde82da0f65c75c75a059a84e897d14565"
+    });
+  </script>
+</body>
+</html>
