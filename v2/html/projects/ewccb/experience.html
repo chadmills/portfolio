@@ -5,10 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>EWCCB Experience</title>
   <LINK REL="SHORTCUT ICON" HREF="https://chadmills.github.io/portfolio/v2/html/img/cdm.ico">
-<!-- EWCCB Experience Form v0.4
-     Separate destination page loaded from introv2.html transition.
-     Update: payload now includes Klaviyo list metadata for Worker-side list subscription.
+
+<!-- EWCCB Experience Form v0.5
+     Update: Premium SMS option redirects to SlickText partner form after 3-second countdown.
 -->
+
   <style>
     :root {
       --ink: #15110d;
@@ -26,8 +27,7 @@
 
     * { box-sizing: border-box; }
 
-    html,
-    body {
+    html, body {
       margin: 0;
       min-height: 100%;
       font-family: Arial, Helvetica, sans-serif;
@@ -55,8 +55,7 @@
       align-items: stretch;
     }
 
-    .intro,
-    .form-card {
+    .intro, .form-card {
       border: 1px solid var(--line);
       border-radius: 28px;
       background: var(--panel);
@@ -167,8 +166,7 @@
       font-size: 0.9rem;
     }
 
-    select,
-    input {
+    select, input {
       width: 100%;
       border: 1px solid rgba(246, 234, 216, 0.18);
       background: rgba(0, 0, 0, 0.24);
@@ -179,8 +177,7 @@
       outline: none;
     }
 
-    select:focus,
-    input:focus {
+    select:focus, input:focus {
       border-color: rgba(214, 168, 79, 0.78);
       box-shadow: 0 0 0 4px rgba(214, 168, 79, 0.12);
     }
@@ -215,6 +212,34 @@
     }
 
     .experience-copy strong { color: var(--gold-2); }
+
+    .partner-notice {
+      margin-top: 16px;
+      padding: 14px;
+      border-radius: 14px;
+      border: 1px solid rgba(214, 168, 79, 0.35);
+      background: rgba(0, 0, 0, 0.18);
+      color: var(--cream);
+      line-height: 1.5;
+    }
+
+    .partner-notice strong {
+      color: var(--gold-2);
+    }
+
+    #smsCountdown {
+      color: var(--gold-2);
+      font-weight: 900;
+      font-size: 1.15rem;
+    }
+
+    .partner-link {
+      display: inline-block;
+      margin-top: 10px;
+      color: var(--gold-2);
+      font-weight: 900;
+      text-decoration: none;
+    }
 
     .button-row { margin-top: 22px; }
 
@@ -256,12 +281,10 @@
       .page { place-items: start center; }
     }
   </style>
-    <script
-  async
-  type="text/javascript"
-  src="https://static.klaviyo.com/onsite/js/klaviyo.js?company_id=SR8TU9">
-</script>
+
+  <script async type="text/javascript" src="https://static.klaviyo.com/onsite/js/klaviyo.js?company_id=SR8TU9"></script>
 </head>
+
 <body>
   <main class="page">
     <section class="shell">
@@ -286,7 +309,7 @@
       <section class="form-card">
         <div class="eyebrow">Start the Journey</div>
         <h2>Experience request</h2>
-        <p class="form-sub">
+        <p class="form-sub" id="formSub">
           Pick a channel, enter your info, and this request will be sent to the live EWCCB automation endpoint for Klaviyo profile, list, and event processing.
         </p>
 
@@ -294,7 +317,7 @@
           <label for="experienceType">Select Experience</label>
           <select id="experienceType" name="experienceType">
             <option value="email">Premium Email Experience</option>
-            <option value="sms"disabled>COMING SOON: Premium SMS </option>
+            <option value="sms">Premium SMS Experience</option>
           </select>
 
           <div class="experience-copy" id="experienceCopy">
@@ -314,7 +337,7 @@
           </div>
         </form>
 
-        <div class="status-note">
+        <div class="status-note" id="statusNote">
           Live state: this form submits to the EWCCB automation endpoint and includes Klaviyo list metadata.
         </div>
       </section>
@@ -331,17 +354,13 @@
     const firstName = document.getElementById("firstName");
     const firstNameError = document.getElementById("firstNameError");
     const contactError = document.getElementById("contactError");
-
-    /*
-      Live Cloudflare Worker endpoint.
-
-      IMPORTANT:
-      Do not place a Klaviyo private API key in this HTML file.
-      The private key lives securely inside the Cloudflare Worker as:
-      KLAVIYO_API_KEY
-    */
+    const formSub = document.getElementById("formSub");
+    const statusNote = document.getElementById("statusNote");
 
     const EWCCB_ENDPOINT = "https://ewccb-demo-endpoint.team-723.workers.dev";
+    const SLICKTEXT_FORM_URL = "https://stforms.co/ffbd7d3b74afdcd647ddcafc49c7d740";
+
+    let smsRedirectTimer = null;
 
     const copy = {
       email: {
@@ -354,17 +373,57 @@
         channel: "email"
       },
       sms: {
-        html: "<strong>Premium SMS Experience:</strong> You’ll receive a concise mobile-first messaging experience designed to demonstrate SMS strategy, channel timing, consent-aware thinking, and customer journey execution.",
+        html: `
+          <strong>Premium SMS Experience:</strong> You’ll receive a mobile-first SMS/MMS journey designed to demonstrate consent-aware messaging, MMS delivery, channel timing, and automated follow-up strategy.
+
+          <div class="partner-notice">
+            <strong>Partner-powered experience:</strong><br>
+            This SMS/MMS demo is powered by a secure SMS partner platform so consent, opt-in, STOP/HELP handling, and messaging compliance are handled correctly.
+            <br><br>
+            Redirecting to the secure SMS registration page in <span id="smsCountdown">3</span>...
+            <br>
+            <a class="partner-link" href="${SLICKTEXT_FORM_URL}">Continue now →</a>
+          </div>
+        `,
         label: "Mobile Number",
         type: "tel",
         placeholder: "+1 555 123 4567",
         autocomplete: "tel",
-        button: "Send SMS Experience",
+        button: "Launch SMS Experience",
         channel: "sms"
       }
     };
 
+    function startSmsRedirect() {
+      let countdown = 10;
+
+      const countdownEl = document.getElementById("smsCountdown");
+
+      if (!countdownEl) return;
+
+      countdownEl.textContent = countdown;
+
+      smsRedirectTimer = setInterval(function() {
+        countdown--;
+        countdownEl.textContent = countdown;
+
+        if (countdown <= 0) {
+          clearInterval(smsRedirectTimer);
+          window.location.href = SLICKTEXT_FORM_URL;
+        }
+      }, 1000);
+    }
+
+    function stopSmsRedirect() {
+      if (smsRedirectTimer) {
+        clearInterval(smsRedirectTimer);
+        smsRedirectTimer = null;
+      }
+    }
+
     function updateExperience() {
+      stopSmsRedirect();
+
       const selected = copy[experienceType.value];
 
       experienceCopy.innerHTML = selected.html;
@@ -376,6 +435,15 @@
       submitButton.textContent = selected.button;
       submitButton.disabled = false;
       clearErrors();
+
+      if (experienceType.value === "sms") {
+        formSub.textContent = "The SMS experience uses a dedicated partner registration flow for consent and carrier-compliant SMS/MMS delivery.";
+        statusNote.textContent = "Live state: selecting Premium SMS redirects to the secure SlickText registration flow.";
+        startSmsRedirect();
+      } else {
+        formSub.textContent = "Pick a channel, enter your info, and this request will be sent to the live EWCCB automation endpoint for Klaviyo profile, list, and event processing.";
+        statusNote.textContent = "Live state: this form submits to the EWCCB automation endpoint and includes Klaviyo list metadata.";
+      }
     }
 
     function clearErrors() {
@@ -397,13 +465,8 @@
     function normalizePhone(value) {
       const digits = value.replace(/\D/g, "");
 
-      if (digits.length === 10) {
-        return "+1" + digits;
-      }
-
-      if (digits.length === 11 && digits.startsWith("1")) {
-        return "+" + digits;
-      }
+      if (digits.length === 10) return "+1" + digits;
+      if (digits.length === 11 && digits.startsWith("1")) return "+" + digits;
 
       return value.trim();
     }
@@ -445,10 +508,10 @@
         event_name: "EWCCB Experience Requested",
         source: "EWCCB Experience Page",
         project: "Experience What Chad Can Build",
-		klaviyo_list_name: "Experience What Chad Can Build",
-		klaviyo_list_id: "TtNPiN",
+        klaviyo_list_name: "Experience What Chad Can Build",
+        klaviyo_list_id: "TtNPiN",
         klaviyo_list_type: "list",
-        version: "experience-form-v0.4",
+        version: "experience-form-v0.5",
         experience_type: experienceType.value,
         experience_label: experienceType.options[experienceType.selectedIndex].text,
         channel: selected.channel,
@@ -460,16 +523,6 @@
     }
 
     async function sendRequest(payload) {
-      /*
-        Sends the experience request payload to the live Cloudflare Worker endpoint.
-        The Worker securely forwards profile, list, and event data to Klaviyo.
-      */
-
-      if (!EWCCB_ENDPOINT) {
-        console.log("EWCCB payload ready for future Klaviyo endpoint:", payload);
-        return { ok: true, mode: "local-preview" };
-      }
-
       const response = await fetch(EWCCB_ENDPOINT, {
         method: "POST",
         headers: {
@@ -502,9 +555,12 @@
     form.addEventListener("submit", async function(event) {
       event.preventDefault();
 
-      if (!validateForm()) {
+      if (experienceType.value === "sms") {
+        window.location.href = SLICKTEXT_FORM_URL;
         return;
       }
+
+      if (!validateForm()) return;
 
       const payload = buildPayload();
 
@@ -533,4 +589,3 @@
   </script>
 </body>
 </html>
-```
