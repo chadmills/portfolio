@@ -6,8 +6,9 @@
   <title>EWCCB Experience</title>
   <LINK REL="SHORTCUT ICON" HREF="https://chadmills.github.io/portfolio/v2/html/img/cdm.ico">
 
-<!-- EWCCB Experience Form v0.5
-     Update: Premium SMS option redirects to SlickText partner form after 3-second countdown.
+<!-- EWCCB Experience Form v0.6
+     Update: Premium SMS option re-enabled and redirects to SlickText partner form after countdown.
+     Note: Premium Email Cloudflare Worker flow preserved.
 -->
 
   <style>
@@ -380,6 +381,7 @@
             <strong>Partner-powered experience:</strong><br>
             This SMS/MMS demo is powered by a secure SMS partner platform so consent, opt-in, STOP/HELP handling, and messaging compliance are handled correctly.
             <br><br>
+            SMS requires we redirect to your a partner website.<br>
             Redirecting to the secure SMS registration page in <span id="smsCountdown">3</span>...
             <br>
             <a class="partner-link" href="${SLICKTEXT_FORM_URL}">Continue now →</a>
@@ -395,7 +397,7 @@
     };
 
     function startSmsRedirect() {
-      let countdown = 10;
+      let countdown = 3;
 
       const countdownEl = document.getElementById("smsCountdown");
 
@@ -511,7 +513,7 @@
         klaviyo_list_name: "Experience What Chad Can Build",
         klaviyo_list_id: "TtNPiN",
         klaviyo_list_type: "list",
-        version: "experience-form-v0.5",
+        version: "experience-form-v0.6",
         experience_type: experienceType.value,
         experience_label: experienceType.options[experienceType.selectedIndex].text,
         channel: selected.channel,
