@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="en" data-version="1.1">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- Chad D. Mills UX Portfolio — Version 1.1 -->
+  <meta name="description" content="Chad D. Mills — UX, lifecycle, and digital experience portfolio." />
+  <meta name="author" content="Chad D. Mills" />
+  <meta name="theme-color" content="#f5f5f2" />
+  <link rel="canonical" href="https://www.chadmills713.com/ux/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Chad D. Mills — UX & Digital Experience" />
+  <meta property="og:description" content="UX-first portfolio featuring responsive email systems, web experiences, and EWCCB." />
+  <meta property="og:url" content="https://www.chadmills713.com/ux/" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <title>Chad D. Mills — UX & Digital Experience</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #f5f5f2;
+      --surface: rgba(255,255,255,.72);
+      --surface-strong: #ffffff;
+      --text: #111111;
+      --muted: #6b6b66;
+      --line: rgba(17,17,17,.11);
+      --accent: #caa85e;
+      --accent-soft: #f0e6cc;
+      --shadow: 0 30px 80px rgba(0,0,0,.12);
+      --radius: 28px;
+      --max: 1240px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: Inter, system-ui, sans-serif;
+      background:
+        radial-gradient(circle at 15% 0%, rgba(202,168,94,.17), transparent 28%),
+        radial-gradient(circle at 90% 14%, rgba(0,0,0,.05), transparent 24%),
+        var(--bg);
+      color: var(--text);
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      opacity: .25;
+      background-image: linear-gradient(rgba(0,0,0,.02) 1px, transparent 1px), linear-gradient(90deg, rgba(0,0,0,.02) 1px, transparent 1px);
+      background-size: 48px 48px;
+      mask-image: linear-gradient(to bottom, black, transparent 80%);
+      z-index: -1;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    button, a { -webkit-tap-highlight-color: transparent; }
+    :focus-visible { outline: 3px solid var(--accent); outline-offset: 4px; }
+
+    .progress {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 0;
+      height: 3px;
+      background: var(--accent);
+      z-index: 1000;
+    }
+
+    .nav {
+      position: fixed;
+      top: 18px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: min(calc(100% - 32px), 1120px);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      padding: 12px 14px 12px 18px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(245,245,242,.76);
+      backdrop-filter: blur(18px);
+      z-index: 900;
+      transition: .3s ease;
+    }
+
+    .brand { font-family: Manrope, sans-serif; font-weight: 800; letter-spacing: -.04em; }
+    .brand span { color: var(--accent); }
+    .nav-links { display: flex; gap: 8px; align-items: center; }
+    .nav-links a {
+      padding: 10px 14px;
+      border-radius: 999px;
+      font-size: .9rem;
+      color: var(--muted);
+      transition: .25s ease;
+    }
+    .nav-links a:hover, .nav-links a.active { background: var(--surface-strong); color: var(--text); }
+    .nav-cta { background: var(--text)!important; color: white!important; }
+
+    .shell { width: min(calc(100% - 36px), var(--max)); margin: 0 auto; }
+
+    .hero {
+      min-height: 100vh;
+      display: grid;
+      align-items: end;
+      padding: 150px 0 62px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-size: .8rem;
+      font-weight: 700;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 24px;
+    }
+    .eyebrow::before { content:""; width: 34px; height: 1px; background: var(--accent); }
+
+    h1, h2, h3 { font-family: Manrope, sans-serif; }
+    h1 {
+      max-width: 1040px;
+      font-size: clamp(4rem, 10vw, 9rem);
+      line-height: .91;
+      letter-spacing: -.075em;
+      margin: 0;
+    }
+    .hero .outline { color: transparent; -webkit-text-stroke: 1.5px var(--text); }
+    .hero-bottom {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: end;
+      margin-top: 54px;
+    }
+    .hero-copy { max-width: 600px; font-size: clamp(1.1rem, 2vw, 1.5rem); line-height: 1.55; color: var(--muted); }
+    .hero-copy strong { color: var(--text); font-weight: 600; }
+    .hero-actions { display:flex; justify-content:flex-end; gap: 12px; flex-wrap: wrap; }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 14px 20px;
+      background: rgba(255,255,255,.62);
+      font-weight: 600;
+      transition: .25s ease;
+      cursor: pointer;
+    }
+    .btn:hover { transform: translateY(-3px); box-shadow: 0 16px 35px rgba(0,0,0,.1); }
+    .btn.primary { background: var(--text); color: #fff; }
+    .btn .arrow { transition: transform .25s ease; }
+    .btn:hover .arrow { transform: translateX(4px); }
+
+    section { padding: 110px 0; }
+    .section-head {
+      display:grid;
+      grid-template-columns: .7fr 1.3fr;
+      gap: 42px;
+      align-items: end;
+      margin-bottom: 46px;
+    }
+    .section-head h2 { font-size: clamp(2.8rem, 6vw, 5.8rem); line-height: .95; letter-spacing: -.06em; margin: 0; }
+    .section-head p { max-width: 620px; color: var(--muted); font-size: 1.08rem; line-height: 1.7; margin: 0; }
+
+    .work-grid { display:grid; grid-template-columns: repeat(12, 1fr); gap: 22px; }
+    .project {
+      position: relative;
+      min-height: 560px;
+      border-radius: var(--radius);
+      overflow: hidden;
+      border: 1px solid var(--line);
+      box-shadow: 0 18px 60px rgba(0,0,0,.08);
+      cursor: pointer;
+      isolation: isolate;
+      transition: transform .4s cubic-bezier(.2,.8,.2,1), box-shadow .4s ease;
+    }
+    .project:hover { transform: translateY(-8px); box-shadow: var(--shadow); }
+    .project.large { grid-column: span 7; }
+    .project.small { grid-column: span 5; }
+    .project.full { grid-column: span 12; min-height: 620px; }
+
+    .project-bg { position:absolute; inset:0; transition: transform .7s ease; }
+    .project:hover .project-bg { transform: scale(1.035); }
+    .email-bg { background: linear-gradient(145deg,#161616 0%,#282828 55%,#b99242 170%); }
+    .web-bg { background: linear-gradient(145deg,#f4ead0,#d1b46c 60%,#121212 180%); }
+    .ewccb-bg { background: radial-gradient(circle at 18% 20%,#3a3a3a,transparent 28%),linear-gradient(145deg,#090909,#151515 60%,#2d2210); }
+
+    .project-content { position:relative; z-index:2; height:100%; padding:34px; display:flex; flex-direction:column; justify-content:space-between; }
+    .project.dark { color:white; }
+    .project-label { font-size:.76rem; text-transform:uppercase; letter-spacing:.14em; opacity:.68; font-weight:700; }
+    .project-title { font-size: clamp(2.2rem, 4.5vw, 4.9rem); line-height:.95; letter-spacing:-.055em; margin:12px 0; max-width:760px; }
+    .project-copy { max-width:540px; line-height:1.6; opacity:.76; }
+    .project-meta { display:flex; flex-wrap:wrap; gap:8px; margin-top:18px; }
+    .chip { padding:8px 11px; border-radius:999px; border:1px solid currentColor; opacity:.7; font-size:.78rem; }
+    .project-arrow { width:58px; height:58px; border-radius:50%; background:rgba(255,255,255,.14); display:grid; place-items:center; font-size:1.5rem; backdrop-filter:blur(10px); }
+
+    .device-stage { position:absolute; inset:auto 0 0; height:58%; pointer-events:none; }
+    .email-stack { position:absolute; right:6%; bottom:-10%; width:54%; min-width:300px; aspect-ratio:1.2; }
+    .email-card { position:absolute; inset:0; border-radius:22px; background:#fff; box-shadow:0 28px 70px rgba(0,0,0,.35); transform:rotate(-6deg); overflow:hidden; }
+    .email-card:nth-child(2){ transform:translate(8%,9%) rotate(4deg); opacity:.7; }
+    .email-card:nth-child(3){ transform:translate(14%,18%) rotate(10deg); opacity:.35; }
+    .email-card .bar { height:11%; background:#101010; }
+    .email-card .hero-block { margin:7%; height:38%; border-radius:12px; background:linear-gradient(135deg,#d7bd80,#80631f); }
+    .email-card .line { height:8px; background:#ddd; margin:0 8% 4%; border-radius:10px; }
+    .email-card .line.short { width:48%; }
+
+    .browser { position:absolute; width:74%; right:-4%; bottom:-9%; aspect-ratio:1.4; border-radius:22px 22px 0 0; background:#fff; box-shadow:0 30px 70px rgba(0,0,0,.25); overflow:hidden; transform:rotate(-2deg); }
+    .browser-top { height:9%; background:#ecebe7; display:flex; align-items:center; gap:7px; padding:0 16px; }
+    .dot { width:8px; height:8px; border-radius:50%; background:#aaa; }
+    .browser-body { height:91%; background:linear-gradient(155deg,#111 0 52%,#c4a052 52%); position:relative; }
+    .browser-body::before { content:"CHIZZLE713"; position:absolute; left:8%; top:14%; color:#fff; font-family:Manrope; font-size:clamp(1.2rem,3vw,3rem); font-weight:800; letter-spacing:-.05em; }
+    .browser-body::after { content:"Creative systems. Built to perform."; position:absolute; left:8%; top:34%; width:36%; color:rgba(255,255,255,.7); font-size:clamp(.55rem,1vw,1rem); line-height:1.4; }
+
+    .experience-flow { position:absolute; right:4%; bottom:5%; width:54%; height:55%; }
+    .flow-card { position:absolute; width:42%; aspect-ratio:1.2; border-radius:20px; border:1px solid rgba(255,255,255,.18); background:rgba(255,255,255,.08); backdrop-filter:blur(16px); padding:18px; color:#fff; box-shadow:0 22px 50px rgba(0,0,0,.35); }
+    .flow-card:nth-child(1){ left:0; top:30%; }
+    .flow-card:nth-child(2){ left:28%; top:0; }
+    .flow-card:nth-child(3){ left:57%; top:31%; }
+    .flow-num { color:var(--accent); font-size:.72rem; letter-spacing:.12em; }
+    .flow-title { font-family:Manrope; font-weight:700; font-size:1.15rem; margin-top:28px; }
+
+    .proof { display:grid; grid-template-columns:repeat(4,1fr); gap:16px; margin-top:20px; }
+    .stat { padding:28px; border:1px solid var(--line); border-radius:22px; background:rgba(255,255,255,.48); }
+    .stat strong { display:block; font-family:Manrope; font-size:clamp(2rem,4vw,4.1rem); letter-spacing:-.05em; }
+    .stat span { color:var(--muted); line-height:1.4; }
+
+    .process-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:18px; }
+    .process-card { padding:28px; min-height:280px; border-radius:24px; background:#111; color:#fff; position:relative; overflow:hidden; }
+    .process-card:nth-child(even){ background:#e6d9b8; color:#111; }
+    .process-card::after { content:attr(data-step); position:absolute; right:18px; bottom:-28px; font-family:Manrope; font-size:8rem; font-weight:800; opacity:.07; }
+    .process-card h3 { font-size:1.5rem; margin-top:70px; }
+    .process-card p { color:inherit; opacity:.68; line-height:1.55; }
+    .process-icon { font-size:1.6rem; }
+
+    .skills-wrap { display:flex; flex-wrap:wrap; gap:12px; }
+    .skill { padding:14px 18px; border:1px solid var(--line); border-radius:999px; background:rgba(255,255,255,.52); font-weight:600; transition:.25s ease; }
+    .skill:hover { background:var(--text); color:white; transform:translateY(-3px); }
+
+    .timeline { position:relative; margin-top:18px; }
+    .timeline::before { content:""; position:absolute; left:18px; top:8px; bottom:8px; width:1px; background:var(--line); }
+    .timeline-row { display:grid; grid-template-columns:160px 1fr; gap:38px; padding:24px 0 24px 56px; position:relative; }
+    .timeline-row::before { content:""; position:absolute; left:11px; top:31px; width:14px; height:14px; border-radius:50%; background:var(--bg); border:3px solid var(--accent); }
+    .timeline-year { font-family:Manrope; font-weight:800; font-size:1.15rem; }
+    .timeline-role h3 { margin:0 0 6px; font-size:1.45rem; }
+    .timeline-role p { margin:0; color:var(--muted); line-height:1.55; }
+
+    .cta-panel { background:#111; color:white; border-radius:36px; padding:clamp(38px,7vw,90px); position:relative; overflow:hidden; }
+    .cta-panel::after { content:""; position:absolute; width:380px; height:380px; border-radius:50%; background:radial-gradient(circle,var(--accent),transparent 68%); right:-140px; bottom:-180px; opacity:.5; }
+    .cta-panel h2 { font-size:clamp(3rem,8vw,7rem); line-height:.92; letter-spacing:-.065em; margin:0 0 28px; max-width:900px; }
+    .cta-panel p { color:rgba(255,255,255,.65); font-size:1.15rem; max-width:600px; line-height:1.6; }
+    .cta-panel .btn { background:white; color:#111; margin-top:16px; position:relative; z-index:2; }
+
+    footer { padding:32px 0 50px; display:flex; justify-content:space-between; color:var(--muted); font-size:.9rem; }
+
+    .reveal { opacity:0; transform:translateY(28px); transition: .8s cubic-bezier(.2,.8,.2,1); }
+    .reveal.visible { opacity:1; transform:none; }
+
+    .modal { position:fixed; inset:0; z-index:1200; display:none; align-items:center; justify-content:center; padding:22px; }
+    .modal.open { display:flex; }
+    .modal-backdrop { position:absolute; inset:0; background:rgba(0,0,0,.68); backdrop-filter:blur(12px); }
+    .modal-card { position:relative; width:min(980px,100%); max-height:90vh; overflow:auto; border-radius:30px; background:#f7f6f2; box-shadow:var(--shadow); padding:34px; animation:pop .35s ease; }
+    @keyframes pop { from{opacity:0;transform:scale(.96) translateY(20px)} to{opacity:1;transform:none} }
+    .modal-close { position:sticky; top:0; float:right; width:44px; height:44px; border-radius:50%; border:1px solid var(--line); background:white; cursor:pointer; font-size:1.2rem; z-index:2; }
+    .modal-kicker { color:var(--accent); text-transform:uppercase; font-size:.75rem; font-weight:800; letter-spacing:.14em; }
+    .modal-card h2 { font-size:clamp(2.5rem,6vw,5rem); line-height:.95; letter-spacing:-.055em; margin:14px 0 20px; }
+    .modal-grid { display:grid; grid-template-columns:1fr 1fr; gap:22px; margin-top:28px; }
+    .modal-block { padding:24px; border-radius:20px; background:white; border:1px solid var(--line); }
+    .modal-block h3 { margin:0 0 10px; }
+    .modal-block p { color:var(--muted); line-height:1.6; margin:0; }
+    .modal-actions { margin-top:24px; display:flex; gap:12px; flex-wrap:wrap; }
+
+    @media (max-width: 900px){
+      .nav-links a:not(.nav-cta){ display:none; }
+      .hero-bottom,.section-head { grid-template-columns:1fr; }
+      .hero-actions { justify-content:flex-start; }
+      .project.large,.project.small,.project.full { grid-column:span 12; }
+      .proof,.process-grid { grid-template-columns:1fr 1fr; }
+      .project { min-height:520px; }
+      .section-head { gap:20px; }
+    }
+    @media (max-width: 620px){
+      h1 { font-size:clamp(3.45rem,18vw,5.8rem); }
+      section { padding:80px 0; }
+      .hero { padding-top:130px; }
+      .proof,.process-grid,.modal-grid { grid-template-columns:1fr; }
+      .timeline-row { grid-template-columns:1fr; gap:8px; }
+      .project-content { padding:24px; }
+      .email-stack,.browser,.experience-flow { width:78%; right:-12%; opacity:.85; }
+      footer { flex-direction:column; gap:8px; }
+    }
+    @media (prefers-reduced-motion: reduce){
+      * { scroll-behavior:auto!important; animation:none!important; transition:none!important; }
+    }
+  </style>
+</head>
+<body>
+  <div class="progress" id="progress"></div>
+  <nav class="nav" aria-label="Primary navigation">
+    <a class="brand" href="#top">CDM.<span>UX</span></a>
+    <div class="nav-links">
+      <a href="#work">Work</a>
+      <a href="#process">Process</a>
+      <a href="#experience">Experience</a>
+      <a href="mailto:chad@chizzle713.com" class="nav-cta">Start a conversation</a>
+    </div>
+  </nav>
+
+  <main id="top">
+    <section class="hero shell">
+      <div>
+        <div class="eyebrow reveal">UX • Lifecycle • Digital Experience</div>
+        <h1 class="reveal">I design <span class="outline">clarity</span><br>people can feel.</h1>
+        <div class="hero-bottom reveal">
+          <p class="hero-copy">I’m Chad D. Mills, a Houston-based experience designer who turns complex journeys into <strong>clear, responsive, high-performing digital experiences</strong> across web, email, and automation.</p>
+          <div class="hero-actions">
+            <a href="#work" class="btn primary">Explore selected work <span class="arrow">↘</span></a>
+            <a href="#experience" class="btn">View experience</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="work" class="shell">
+      <div class="section-head reveal">
+        <div><div class="eyebrow">Selected work</div><h2>Built for the moment after the click.</h2></div>
+        <p>Each project connects interaction design, content, technology, and business strategy. The result is work that feels simple on the surface because the complexity has already been resolved underneath.</p>
+      </div>
+
+      <div class="work-grid">
+        <article class="project large dark reveal" tabindex="0" role="button" data-project="email" aria-label="Open Email Experience case study">
+          <div class="project-bg email-bg"></div>
+          <div class="project-content">
+            <div>
+              <div class="project-label">01 / Email experience</div>
+              <h3 class="project-title">Responsive systems, not one-off sends.</h3>
+              <p class="project-copy">Modular email experiences designed for accessibility, personalization, repeatability, and scale.</p>
+              <div class="project-meta"><span class="chip">UX Systems</span><span class="chip">Accessibility</span><span class="chip">Lifecycle</span></div>
+            </div>
+            <div class="project-arrow">↗</div>
+          </div>
+          <div class="device-stage">
+            <div class="email-stack">
+              <div class="email-card"><div class="bar"></div><div class="hero-block"></div><div class="line"></div><div class="line"></div><div class="line short"></div></div>
+              <div class="email-card"></div><div class="email-card"></div>
+            </div>
+          </div>
+        </article>
+
+        <article class="project small reveal" tabindex="0" role="button" data-project="web" aria-label="Open Chizzle713 website case study">
+          <div class="project-bg web-bg"></div>
+          <div class="project-content">
+            <div>
+              <div class="project-label">02 / Web experience</div>
+              <h3 class="project-title">Chizzle713.</h3>
+              <p class="project-copy">A digital home designed to make a multidisciplinary career feel immediate, coherent, and credible.</p>
+              <div class="project-meta"><span class="chip">IA</span><span class="chip">Responsive UI</span><span class="chip">Front-end</span></div>
+            </div>
+            <div class="project-arrow">↗</div>
+          </div>
+          <div class="browser"><div class="browser-top"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div><div class="browser-body"></div></div>
+        </article>
+
+        <article class="project full dark reveal" tabindex="0" role="button" data-project="ewccb" aria-label="Open EWCCB case study">
+          <div class="project-bg ewccb-bg"></div>
+          <div class="project-content">
+            <div>
+              <div class="project-label">03 / Flagship concept</div>
+              <h3 class="project-title">Experience What Chad Can Build.</h3>
+              <p class="project-copy">An interactive recruiter journey that transforms a portfolio visit into a personalized, automated product experience.</p>
+              <div class="project-meta"><span class="chip">Concept Strategy</span><span class="chip">Motion</span><span class="chip">Klaviyo</span><span class="chip">Automation</span></div>
+            </div>
+            <div class="project-arrow">↗</div>
+          </div>
+          <div class="experience-flow">
+            <div class="flow-card"><div class="flow-num">01 / ENTER</div><div class="flow-title">Interactive introduction</div></div>
+            <div class="flow-card"><div class="flow-num">02 / ENGAGE</div><div class="flow-title">Personalized signup</div></div>
+            <div class="flow-card"><div class="flow-num">03 / CONTINUE</div><div class="flow-title">Automated journey</div></div>
+          </div>
+        </article>
+      </div>
+
+      <div class="proof reveal">
+        <div class="stat"><strong>20+</strong><span>years shaping digital communication experiences</span></div>
+        <div class="stat"><strong>6×</strong><span>Klaviyo certified across lifecycle and deliverability</span></div>
+        <div class="stat"><strong>4×</strong><span>Zeta certified in enterprise marketing technology</span></div>
+        <div class="stat"><strong>1</strong><span>rare intersection of UX, code, strategy, and execution</span></div>
+      </div>
+    </section>
+
+    <section id="process" class="shell">
+      <div class="section-head reveal">
+        <div><div class="eyebrow">How I work</div><h2>Reduce the surface area.</h2></div>
+        <p>My process is built around one belief: information is forgettable; clarity is memorable. I remove friction early so the final experience feels obvious, focused, and easy to use.</p>
+      </div>
+      <div class="process-grid">
+        <div class="process-card reveal" data-step="01"><div class="process-icon">⌕</div><h3>Understand</h3><p>Clarify the user, business need, constraints, and real decision the experience must support.</p></div>
+        <div class="process-card reveal" data-step="02"><div class="process-icon">⌘</div><h3>Structure</h3><p>Turn complexity into hierarchy, flows, reusable components, and a clear path forward.</p></div>
+        <div class="process-card reveal" data-step="03"><div class="process-icon">◇</div><h3>Design</h3><p>Create responsive, accessible interfaces with the right balance of restraint and visual energy.</p></div>
+        <div class="process-card reveal" data-step="04"><div class="process-icon">↗</div><h3>Prove</h3><p>Prototype, test, measure, and improve until the experience works in the real world.</p></div>
+      </div>
+    </section>
+
+    <section class="shell">
+      <div class="section-head reveal">
+        <div><div class="eyebrow">Capabilities</div><h2>Strategy that can ship.</h2></div>
+        <p>I bridge the gap between ideas and implementation—working comfortably across UX, visual design, lifecycle strategy, front-end development, analytics, and enterprise marketing platforms.</p>
+      </div>
+      <div class="skills-wrap reveal">
+        <span class="skill">UX Strategy</span><span class="skill">Interaction Design</span><span class="skill">Journey Mapping</span><span class="skill">Information Architecture</span><span class="skill">Responsive Design</span><span class="skill">Accessibility</span><span class="skill">Email Design Systems</span><span class="skill">Lifecycle Marketing</span><span class="skill">HTML / CSS / JavaScript</span><span class="skill">Figma</span><span class="skill">Klaviyo</span><span class="skill">Salesforce</span><span class="skill">Zeta</span><span class="skill">GA4</span><span class="skill">Looker Studio</span><span class="skill">SQL</span>
+      </div>
+    </section>
+
+<section id="experience" class="shell">
+  <div class="section-head reveal">
+    <div>
+      <div class="eyebrow">Experience</div>
+      <h2>Designing experiences.<br>Building systems.</h2>
+    </div>
+
+    <p>
+      Twenty years of turning complex workflows into intuitive customer
+      experiences—from product design and UX strategy to enterprise lifecycle
+      marketing and marketing automation.
+    </p>
+  </div>
+
+  <div class="timeline reveal">
+
+    <div class="timeline-row">
+      <div class="timeline-year">2004–2016</div>
+
+      <div class="timeline-role">
+        <h3>UrbanThang</h3>
+
+        <p>
+          <strong>Founder • Product Designer • Growth Strategist</strong><br>
+          Conceived, designed, and evolved one of Houston's earliest digital
+          nightlife platforms, pioneering email, SMS, and web experiences long
+          before modern marketing automation became mainstream. Built the
+          product from concept to adoption while continuously refining the
+          customer experience through real-world audience behavior.
+        </p>
+      </div>
+    </div>
+
+    <div class="timeline-row">
+      <div class="timeline-year">2018–2020</div>
+
+      <div class="timeline-role">
+        <h3>Thumbjamz</h3>
+
+        <p>
+          <strong>Product &amp; UX Designer</strong><br>
+          Led product strategy and UX design for an event discovery SaaS
+          platform, transforming complex entertainment workflows into intuitive
+          digital experiences. Designed responsive interfaces, interactive
+          prototypes, scalable design systems, and investor-ready product
+          experiences while collaborating closely with engineering.
+        </p>
+      </div>
+    </div>
+
+    <div class="timeline-row">
+      <div class="timeline-year">2022–2023</div>
+
+      <div class="timeline-role">
+        <h3>Eventellect</h3>
+
+        <p>
+          <strong>Lead UX Designer</strong><br>
+          Directed UX initiatives for enterprise B2B ticketing and hospitality
+          solutions, simplifying complex customer journeys while improving
+          usability, stakeholder collaboration, and measurable business
+          outcomes. Established scalable UX processes that accelerated product
+          delivery and elevated the customer experience.
+        </p>
+      </div>
+    </div>
+
+    <div class="timeline-row">
+      <div class="timeline-year">2023–2025</div>
+
+      <div class="timeline-role">
+        <h3>Batteries Plus</h3>
+
+        <p>
+          <strong>Lifecycle UX &amp; Marketing Automation Lead</strong><br>
+          Bridged UX strategy with enterprise marketing technology by designing
+          customer journeys across Salesforce Marketing Cloud, Pardot, Zeta,
+          email, SMS, and AI-powered personalization. Created scalable,
+          data-driven lifecycle experiences that improved engagement while
+          modernizing marketing operations across both B2B and B2C audiences.
+        </p>
+      </div>
+    </div>
+
+    <div class="timeline-row">
+      <div class="timeline-year">2025–2026</div>
+
+      <div class="timeline-role">
+        <h3>Citizens / Mastercard</h3>
+
+        <p>
+          <strong>Lifecycle Experience Strategist &amp; Sr. Campaign Specialist</strong><br>
+          Designed and executed regulated enterprise lifecycle experiences
+          across email and SMS, partnering with UX, analytics, engineering,
+          compliance, product, and business stakeholders to deliver
+          personalized customer journeys through the Zeta Marketing Platform.
+          Led audience strategy, segmentation, QA, and campaign execution while
+          balancing user experience, accessibility, and regulatory compliance.
+        </p>
+      </div>
+    </div>
+
+    <div class="timeline-row">
+      <div class="timeline-year">Present</div>
+
+      <div class="timeline-role">
+        <h3>GS Solutions</h3>
+
+        <p>
+          <strong>Principal UX &amp; Lifecycle Consultant</strong><br>
+          Delivering multifaceted, platform-agnostic customer engagement
+          solutions across Salesforce Marketing Cloud, Account Engagement
+          (Pardot), Klaviyo, Zeta Marketing Platform, responsive web
+          experiences, and AI-assisted workflows. Helping organizations connect
+          UX strategy, lifecycle marketing, automation, and technical execution
+          into scalable digital experiences that improve engagement and
+          business performance.
+        </p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+    <section class="shell">
+      <div class="cta-panel reveal">
+        <h2>Good design gets attention. Clear design earns trust.</h2>
+        <p>I’m looking for the next opportunity to bring UX thinking, lifecycle expertise, and hands-on execution to a team that values thoughtful systems and measurable impact.</p>
+        <a class="btn" href="mailto:chad@chizzle713.com">Let’s talk <span class="arrow">↗</span></a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="shell">
+    <span>© <span id="year"></span> Chad D. Mills</span>
+    <span>Houston, Texas • Designed and built with intent</span>
+  </footer>
+
+  <div class="modal" id="modal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <div class="modal-backdrop" data-close></div>
+    <div class="modal-card">
+      <button class="modal-close" data-close aria-label="Close project details">×</button>
+      <div id="modal-content"></div>
+    </div>
+  </div>
+
+  <script>
+    const projects = {
+      email: {
+        kicker: 'Email Experience',
+        title: 'Designing communication as a product system.',
+        intro: 'Rather than treating email as a one-time creative asset, I design modular systems that balance brand, accessibility, personalization, QA, and operational speed.',
+        blocks: [
+          ['Challenge','Enterprise and high-volume email programs often become fragmented, difficult to maintain, and inconsistent across devices.'],
+          ['Approach','Create a reusable component system, clear content hierarchy, responsive behavior, and accessible fallbacks for real-world inbox constraints.'],
+          ['UX Lens','Every module answers a user question, supports a task, or removes ambiguity. Decorative elements never outrank comprehension.'],
+          ['Impact','Faster production, easier QA, stronger consistency, and experiences that remain usable across screens, clients, and audience segments.']
+        ],
+        link: 'emails/', linkText: 'Explore email showcase'
+      },
+      web: {
+        kicker: 'Chizzle713 Website',
+        title: 'Turning a broad career into one clear story.',
+        intro: 'Chizzle713 functions as a personal product: a responsive digital home that gives recruiters immediate context, confidence, and a clear path into the work.',
+        blocks: [
+          ['Challenge','A multidisciplinary background can feel scattered when presented as a list of tools, roles, and deliverables.'],
+          ['Approach','Use information architecture, hierarchy, motion, and selective storytelling to unify UX, marketing technology, and front-end execution.'],
+          ['Interaction','Subtle motion, strong responsive behavior, concise copy, and clear calls to action keep the experience focused without feeling static.'],
+          ['Outcome','A portfolio presence that communicates seniority, range, and point of view within the first few seconds.']
+        ],
+        link: 'https://chizzle713.com', linkText: 'Visit Chizzle713'
+      },
+      ewccb: {
+        kicker: 'Experience What Chad Can Build',
+        title: 'A portfolio that behaves like a product journey.',
+        intro: 'EWCCB reimagines the recruiter experience as an interactive lifecycle journey—starting with motion, continuing through signup, and extending into personalized follow-up.',
+        blocks: [
+          ['Concept','Replace the passive portfolio visit with a memorable, opt-in experience that demonstrates the exact capabilities being described.'],
+          ['Journey','Interactive introduction → signup → Klaviyo event → personalized email → landing experience → follow-up.'],
+          ['Technology','HTML, CSS, JavaScript, Cloudflare Workers, Klaviyo profiles, custom events, responsive email, and landing pages.'],
+          ['Why It Matters','The product itself becomes proof: strategy, UX, motion, development, lifecycle orchestration, and personalization in one connected experience.']
+        ],
+        link: 'https://chadmills.github.io/portfolio/v2/html/projects/ewccb/introV2.html', linkText: 'Launch EWCCB'
+      }
+    };
+
+    const modal = document.getElementById('modal');
+    const modalContent = document.getElementById('modal-content');
+    let lastFocused;
+
+    function openProject(key){
+      const p = projects[key];
+      lastFocused = document.activeElement;
+      modalContent.innerHTML = `
+        <div class="modal-kicker">${p.kicker}</div>
+        <h2 id="modal-title">${p.title}</h2>
+        <p style="font-size:1.12rem;line-height:1.7;color:var(--muted);max-width:760px">${p.intro}</p>
+        <div class="modal-grid">${p.blocks.map(([h,b]) => `<div class="modal-block"><h3>${h}</h3><p>${b}</p></div>`).join('')}</div>
+        <div class="modal-actions"><a class="btn primary" href="${p.link}" ${p.link.startsWith('http')?'target="_blank" rel="noopener"':''}>${p.linkText} <span class="arrow">↗</span></a></div>`;
+      modal.classList.add('open');
+      modal.setAttribute('aria-hidden','false');
+      document.body.style.overflow='hidden';
+      modal.querySelector('.modal-close').focus();
+    }
+    function closeModal(){
+      modal.classList.remove('open');
+      modal.setAttribute('aria-hidden','true');
+      document.body.style.overflow='';
+      if(lastFocused) lastFocused.focus();
+    }
+
+    document.querySelectorAll('.project').forEach(card => {
+      card.addEventListener('click',()=>openProject(card.dataset.project));
+      card.addEventListener('keydown',e=>{ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); openProject(card.dataset.project); }});
+    });
+    document.querySelectorAll('[data-close]').forEach(el=>el.addEventListener('click',closeModal));
+    document.addEventListener('keydown',e=>{ if(e.key==='Escape'&&modal.classList.contains('open')) closeModal(); });
+
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => { if(entry.isIntersecting) entry.target.classList.add('visible'); });
+    }, {threshold:.12});
+    document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
+
+    const sections=[...document.querySelectorAll('main section[id]')];
+    const navLinks=[...document.querySelectorAll('.nav-links a[href^="#"]')];
+    window.addEventListener('scroll',()=>{
+      const top=document.documentElement.scrollTop;
+      const height=document.documentElement.scrollHeight-document.documentElement.clientHeight;
+      document.getElementById('progress').style.width=`${(top/height)*100}%`;
+      let current='';
+      sections.forEach(s=>{ if(scrollY>=s.offsetTop-220) current=s.id; });
+      navLinks.forEach(a=>a.classList.toggle('active',a.getAttribute('href')===`#${current}`));
+    },{passive:true});
+
+    document.getElementById('year').textContent=new Date().getFullYear();
+  </script>
+</body>
+</html>
