@@ -4,11 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Experience What Chad Can Build</title>
-  <LINK REL="SHORTCUT ICON" HREF="https://chadmills.github.io/portfolio/v2/html/img/cdm.ico">
-  <!-- CDM UX+E Intro v2.0
-       Source of truth: minimal white intro, recreated logo, dramatic entrance/exit,
-       typewriter text, START HERE button, version/journey copy.
-  -->
+  <link rel="shortcut icon" href="https://chadmills.github.io/portfolio/v2/html/img/cdm.ico">
+
   <style>
     :root {
       --yellow: #f6c21a;
@@ -42,6 +39,9 @@
       position: relative;
     }
 
+    /* ----------------------------
+       INTRO LOGO
+    ----------------------------- */
     .logo-wrap {
       position: absolute;
       inset: 0;
@@ -103,15 +103,9 @@
     }
 
     @keyframes logoPulse {
-      0% {
-        transform: scale(1);
-      }
-      45% {
-        transform: scale(1.075);
-      }
-      100% {
-        transform: scale(1);
-      }
+      0% { transform: scale(1); }
+      45% { transform: scale(1.075); }
+      100% { transform: scale(1); }
     }
 
     @keyframes logoExit {
@@ -125,6 +119,9 @@
       }
     }
 
+    /* ----------------------------
+       MESSAGE
+    ----------------------------- */
     .message {
       text-align: center;
       opacity: 0;
@@ -133,9 +130,7 @@
     }
 
     @keyframes messageIn {
-      to {
-        opacity: 1;
-      }
+      to { opacity: 1; }
     }
 
     .type-line {
@@ -161,19 +156,159 @@
     }
 
     @keyframes blink {
-      0%, 48% {
-        opacity: 1;
-      }
-      49%, 100% {
+      0%, 48% { opacity: 1; }
+      49%, 100% { opacity: 0; }
+    }
+
+    /* ----------------------------
+       LINKEDIN STILL -> HEYGEN VIDEO
+    ----------------------------- */
+    .intro-video {
+      opacity: 0;
+      transform: translateY(12px) scale(.95);
+      margin-top: 26px;
+      margin-bottom: 20px;
+      animation: portraitIn 620ms cubic-bezier(.2,.8,.2,1) 5600ms forwards;
+      display: flex;
+      justify-content: center;
+    }
+
+    .portrait-shell {
+      width: 156px;
+      height: 156px;
+      border-radius: 50%;
+      position: relative;
+      display: grid;
+      place-items: center;
+    }
+
+    .portrait-shell::before {
+      content: "";
+      position: absolute;
+      inset: -8px;
+      border-radius: 50%;
+      border: 2px solid rgba(246, 194, 26, .72);
+      box-shadow: 0 0 0 7px rgba(246, 194, 26, .07);
+      animation: orbitPulse 2.6s ease-in-out infinite;
+    }
+
+    .portrait-mask {
+      width: 156px;
+      height: 156px;
+      border-radius: 50%;
+      overflow: hidden;
+      border: 5px solid #fff;
+      box-shadow:
+        0 0 0 1px rgba(29, 29, 31, .16),
+        0 16px 36px rgba(0, 0, 0, .16);
+      background: #eee;
+      position: relative;
+      z-index: 1;
+      isolation: isolate;
+    }
+
+    .still-layer,
+    .video-layer {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      transition:
+        opacity 700ms ease,
+        transform 700ms cubic-bezier(.2,.8,.2,1),
+        filter 700ms ease;
+    }
+
+    .still-layer {
+      opacity: 1;
+      transform: scale(1);
+      z-index: 2;
+    }
+
+    .video-layer {
+      opacity: 0;
+      transform: scale(1.06);
+      z-index: 1;
+      background: #111;
+    }
+
+    .portrait-mask.is-playing .still-layer {
+      opacity: 0;
+      transform: scale(1.06);
+      filter: blur(2px);
+    }
+
+    .portrait-mask.is-playing .video-layer {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    .sound-toggle {
+      position: absolute;
+      right: -26px;
+      bottom: 2px;
+      z-index: 5;
+      min-width: 42px;
+      height: 42px;
+      padding: 0 11px;
+      border: 3px solid #fff;
+      border-radius: 999px;
+      background: var(--yellow);
+      color: #111;
+      font: inherit;
+      font-size: 11px;
+      font-weight: 900;
+      letter-spacing: .08em;
+      cursor: pointer;
+      box-shadow: 0 8px 20px rgba(0,0,0,.14);
+      opacity: 0;
+      transform: scale(.9);
+      pointer-events: none;
+      transition: opacity 260ms ease, transform 260ms ease;
+    }
+
+    .sound-toggle.is-visible {
+      opacity: 1;
+      transform: scale(1);
+      pointer-events: auto;
+    }
+
+    @keyframes portraitIn {
+      0% {
         opacity: 0;
+        transform: translateY(12px) scale(.95);
+      }
+      72% {
+        opacity: 1;
+        transform: translateY(-2px) scale(1.02);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
       }
     }
 
+    @keyframes orbitPulse {
+      0%, 100% {
+        transform: scale(1);
+        opacity: .85;
+      }
+      50% {
+        transform: scale(1.035);
+        opacity: .45;
+      }
+    }
+
+    /* ----------------------------
+       CTA + SUPPORTING COPY
+    ----------------------------- */
     .coming-soon {
       opacity: 0;
       transform: translateY(18px);
-      margin-top: 34px;
-      animation: buttonIn 520ms ease 5900ms forwards;
+      margin-top: 0;
+      animation: buttonIn 520ms ease 7000ms forwards;
     }
 
     @keyframes buttonIn {
@@ -194,7 +329,7 @@
       padding: 16px 30px;
       cursor: pointer;
       box-shadow: 0 12px 30px rgba(246, 194, 26, 0.32);
-      animation: buttonPulse 1.85s ease-in-out 6500ms infinite;
+      animation: buttonPulse 1.85s ease-in-out 7600ms infinite;
     }
 
     .btn:active {
@@ -222,13 +357,11 @@
       color: var(--soft);
       font-size: 0.92rem;
       line-height: 1.65;
-      animation: promiseIn 620ms ease 6500ms forwards;
+      animation: promiseIn 620ms ease 7600ms forwards;
     }
 
     @keyframes promiseIn {
-      to {
-        opacity: 1;
-      }
+      to { opacity: 1; }
     }
 
     .version {
@@ -239,6 +372,9 @@
       color: #a8a8a8;
     }
 
+    /* ----------------------------
+       EXIT TRANSITION
+    ----------------------------- */
     .transition-layer {
       position: fixed;
       inset: 0;
@@ -327,16 +463,42 @@
       .type-line {
         min-height: 96px;
       }
+
+      .portrait-shell,
+      .portrait-mask {
+        width: 128px;
+        height: 128px;
+      }
+
+      .sound-toggle {
+        right: -34px;
+        height: 38px;
+        min-width: 38px;
+        font-size: 9px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        animation-duration: .01ms !important;
+        animation-delay: 0ms !important;
+        transition-duration: .01ms !important;
+      }
     }
   </style>
-    <script
-  async
-  type="text/javascript"
-  src="https://static.klaviyo.com/onsite/js/klaviyo.js?company_id=SR8TU9">
-</script>
+
+  <script
+    async
+    type="text/javascript"
+    src="https://static.klaviyo.com/onsite/js/klaviyo.js?company_id=SR8TU9">
+  </script>
 </head>
+
 <body>
   <main class="stage" id="stage" aria-label="CDM UX+E Intro">
+
     <section class="logo-wrap" aria-label="CDM UX+E logo animation">
       <div class="cdm-logo">
         <div class="logo-inner">
@@ -347,8 +509,42 @@
     </section>
 
     <section class="message" aria-label="Intro message">
+
       <div class="type-line">
         <span id="typed"></span><span class="cursor" aria-hidden="true"></span>
+      </div>
+
+      <div class="intro-video" aria-label="Chad Mills introduction">
+        <div class="portrait-shell">
+
+          <div class="portrait-mask" id="portraitMask">
+
+            <img
+              class="still-layer"
+              src="https://media.licdn.com/dms/image/v2/D5603AQGxjgkK0fybxQ/profile-displayphoto-shrink_800_800/B56ZY5KEmaH0Ac-/0/1744715664249?e=1790208000&v=beta&t=MDFcq9GFpb5RKglthyJu6b4ba7dpnm4Vj4xrWEMQPKA"
+              alt="Chad Mills"
+            />
+
+            <video
+              class="video-layer"
+              id="buildVideo"
+              playsinline
+              preload="auto"
+            >
+              <source src="build.mp4" type="video/mp4">
+            </video>
+
+          </div>
+
+          <button
+            class="sound-toggle"
+            id="soundToggle"
+            type="button"
+            aria-label="Turn video sound on">
+            SOUND
+          </button>
+
+        </div>
       </div>
 
       <div class="coming-soon">
@@ -360,12 +556,14 @@
         <div>The portfolio ends here.</div>
         <div>The experience begins now.</div>
       </div>
+
     </section>
 
     <div class="transition-layer" aria-hidden="true">
       <div class="transition-circle" id="transitionCircle"></div>
       <div class="transition-panel">Loading experience...</div>
     </div>
+
   </main>
 
   <script>
@@ -374,6 +572,14 @@
     const startDelay = 3220;
     const typeSpeed = 58;
     const dotDelay = 360;
+
+    const stage = document.getElementById("stage");
+    const startBtn = document.getElementById("startBtn");
+    const transitionCircle = document.getElementById("transitionCircle");
+
+    const portraitMask = document.getElementById("portraitMask");
+    const buildVideo = document.getElementById("buildVideo");
+    const soundToggle = document.getElementById("soundToggle");
 
     function sleep(ms) {
       return new Promise(resolve => setTimeout(resolve, ms));
@@ -397,11 +603,77 @@
 
     typeIntro();
 
-    const stage = document.getElementById("stage");
-    const startBtn = document.getElementById("startBtn");
-    const transitionCircle = document.getElementById("transitionCircle");
+    async function startBuildVideo() {
+      /*
+        Primary behavior: autoplay WITH sound.
+        If the browser blocks audible autoplay, keep the LinkedIn
+        still visible and expose a PLAY INTRO control.
+      */
 
-    startBtn.addEventListener("click", function(event) {
+      try {
+        buildVideo.muted = false;
+        buildVideo.volume = 1;
+
+        await buildVideo.play();
+
+        portraitMask.classList.add("is-playing");
+        soundToggle.textContent = "MUTE";
+        soundToggle.setAttribute("aria-label", "Mute video");
+        soundToggle.classList.add("is-visible");
+      } catch (error) {
+        console.warn("Sound-on autoplay was blocked.", error);
+
+        soundToggle.textContent = "PLAY INTRO";
+        soundToggle.setAttribute("aria-label", "Play intro with sound");
+        soundToggle.classList.add("is-visible");
+      }
+    }
+
+    /*
+      The LinkedIn image fades in with the portrait at ~5.6s.
+      Give the still image roughly one second on screen before video begins.
+    */
+    setTimeout(startBuildVideo, 6600);
+
+    soundToggle.addEventListener("click", async function() {
+      try {
+        if (buildVideo.paused) {
+          buildVideo.muted = false;
+          buildVideo.volume = 1;
+
+          await buildVideo.play();
+
+          portraitMask.classList.add("is-playing");
+          soundToggle.textContent = "MUTE";
+          soundToggle.setAttribute("aria-label", "Mute video");
+          return;
+        }
+
+        buildVideo.muted = !buildVideo.muted;
+
+        if (buildVideo.muted) {
+          soundToggle.textContent = "SOUND ON";
+          soundToggle.setAttribute("aria-label", "Turn video sound on");
+        } else {
+          buildVideo.volume = 1;
+          soundToggle.textContent = "MUTE";
+          soundToggle.setAttribute("aria-label", "Mute video");
+        }
+      } catch (error) {
+        console.warn("Unable to control video playback.", error);
+      }
+    });
+
+    /*
+      When the clip finishes, leave the last video frame in the circle.
+      If you prefer to return to the LinkedIn still instead, uncomment:
+      portraitMask.classList.remove("is-playing");
+    */
+    buildVideo.addEventListener("ended", function() {
+      soundToggle.classList.remove("is-visible");
+    });
+
+    startBtn.addEventListener("click", function() {
       const rect = startBtn.getBoundingClientRect();
       const x = rect.left + rect.width / 2;
       const y = rect.top + rect.height / 2;
@@ -412,9 +684,10 @@
       stage.classList.add("is-transitioning");
 
       setTimeout(function() {
-        window.location.href = "experience.html";
+        window.location.href = "https://chadmills.github.io/portfolio/v2/html/projects/ewccb/experience.html";
       }, 1050);
     });
   </script>
+
 </body>
 </html>
